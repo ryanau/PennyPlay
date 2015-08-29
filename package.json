@@ -1,0 +1,35 @@
+{
+  "name": "PennyBet",
+  "version": "0.0.1",
+  "description": "making bets with your friends",
+  "main": "client/main.jsx",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "devserve": "webpack-dev-server -d --config webpack.config.js --content-base public/ --progress --colors",
+    "devbuild": "webpack -d --config webpack.config.js --profile --progress --colors"
+  },
+  "author": "Ryan Au",
+  "license": "MIT",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "devserve": "webpack-dev-server -d --config webpack.dev.config.js --content-base public/ --progress --colors",
+    "devbuild": "webpack -d --config webpack.dev.config.js --profile --progress --colors"
+  },
+  "dependencies": {
+    "jquery": "^2.1.3",
+    "css-loader": "^0.9.1",
+    "jsuri": "^1.3.0",
+    "jsx-loader": "^0.12.2",
+    "react": "^0.12.2",
+    "react-router": "^0.12.4",
+    "reqwest": "^1.1.5",
+    "style-loader": "^0.8.3",
+    "webpack": "^1.6.0",
+    "webpack-dev-server": "^1.8.0"
+  }
+}
