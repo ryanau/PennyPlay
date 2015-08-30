@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :cors_preflight_check, if: proc { Rails.env.development? }
-  before_action :authentication
+  # before_action :authentication
   after_action :cors_set_access_control_headers
 
   def cors_set_access_control_headers
@@ -24,9 +24,11 @@ class ApplicationController < ActionController::API
   def current_user
     @current_user
   end
-  
+
   private
     def authentication
+      p "authen"
+      p request.headers['Authorization']
       begin
         id = JWT.decode(request.headers['Authorization'], ENV['SECRET_KEY_BASE'])[0]['id']
         @current_user = User.find(id)

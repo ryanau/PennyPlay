@@ -26,4 +26,8 @@ class UsersController < ApplicationController
   def index
     render json: {message: "alsdfjlkafjs"}
   end
+
+  def current
+    render json: {message: "logged in"}
+  end
 end

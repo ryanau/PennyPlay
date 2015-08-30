@@ -9,6 +9,6 @@ var Route = Router.Route;
 module.exports = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute name="landing" handler={Landing} />
-    <Route name="bets" handler={BetsContainer} />
+    <Route name="dashboard" handler={BetsContainer} />
   </Route>
 );

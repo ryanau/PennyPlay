@@ -11,7 +11,7 @@ module.exports = React.createClass({
           <div className="pure-menu pure-menu-open">
             <span className="pure-menu-heading">PennyBet</span>
             <ul>
-              <li><Link to="bets">Bets</Link></li>
+              <li><Link to="dashboard">Bets</Link></li>
             </ul>
           </div>
         </div>
