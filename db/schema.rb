@@ -23,7 +23,8 @@ ActiveRecord::Schema.define(version: 20150829222653) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "winner_id"
+    t.integer  "loser_id"
     t.integer  "bet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

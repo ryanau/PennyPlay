@@ -45,10 +45,10 @@ var LogIn = React.createClass({
 			},
 		});
 	},
-	handleClick: function (e) {
+	handleLogOut: function (e) {
 		e.preventDefault();
-		this.props.readFromAPI(this.props.origin + '/users', function(blabs) {
-		}.bind(this));
+		sessionStorage.setItem('jwt','')
+		alert('Logged Out')
 	},
   render: function () {
     return (
@@ -57,7 +57,7 @@ var LogIn = React.createClass({
 	      <p>Email: <input onChange={this.handleEmail} value={this.state.email} /></p>
 	      <p>Password: <input onChange={this.handlePassword} value={this.state.password} /></p>
 	      <button onClick={this.handleSubmit}>Log In</button>
-	      <button onClick={this.handleClick}>Click</button>
+	      <button onClick={this.handleLogOut}>Log Out</button>
       </div>
     );
   }
