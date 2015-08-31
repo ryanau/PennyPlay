@@ -17,7 +17,7 @@ App = React.createClass({
       <div id="app">
         <NavBar />
         <div id="content">
-          <RouteHandler />
+          <RouteHandler origin={this.props.origin}/>
         </div>
       </div>
     );

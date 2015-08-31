@@ -1,7 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
 
-var Bet = require('./Bet.jsx')
+var BetContainer = require('./BetContainer.jsx')
 
 BetsContainer = React.createClass({
 	getInitialState: function () {
@@ -16,7 +16,7 @@ BetsContainer = React.createClass({
 
 	loadBets: function () {
 		$.ajax({
-			url: 'http://localhost:3000/bets',
+			url: this.props.origin + '/bets',
 			type: 'GET',
 			dataType: 'json',
 			crossDomain: true,
@@ -35,15 +35,15 @@ BetsContainer = React.createClass({
   	if (this.state.bets != null) {
 	  	var bets = this.state.bets.map(function (bet, index) {
 	  		return (
-	  			<Bet key={bet.id} bet={bet} />
+	  			<BetContainer key={bet.id} bet={bet} origin={this.props.origin}/>
 	  		);
 	  	}.bind(this));
   	} else {
   		var bets = "Loading..."
-  	}
+  	};
     return (
     	<div>
-	      <h1>Bets</h1>
+	      <h2>Bets</h2>
 	      {bets}
       </div>
     );

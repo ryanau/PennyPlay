@@ -28,7 +28,7 @@ var LogIn = React.createClass({
 			password: this.state.password,
 		};
 		$.ajax({
-			url: 'http://localhost:3000/login',
+			url: this.props.origin + '/login',
 			type: 'POST',
 			data: data,
 			dataType: 'json',
@@ -39,10 +39,11 @@ var LogIn = React.createClass({
 				if (data.message === "logged in") {
 					console.log(data.token)
 					sessionStorage.setItem('jwt', data.token)
+					window.location = this.props.origin + "/dashboard"
 				} else {
 					alert('Log In Failed');
 				};
-			},
+			}.bind(this),
 		});
 	},
 	handleLogOut: function (e) {
