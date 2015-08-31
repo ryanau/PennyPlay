@@ -28,7 +28,7 @@ var LogIn = React.createClass({
 			password: this.state.password,
 		};
 		$.ajax({
-			url: 'http://localhost:3000/login',
+			url: this.props.origin + '/login',
 			type: 'POST',
 			data: data,
 			dataType: 'json',
@@ -39,16 +39,17 @@ var LogIn = React.createClass({
 				if (data.message === "logged in") {
 					console.log(data.token)
 					sessionStorage.setItem('jwt', data.token)
+					window.location = this.props.origin + "/dashboard"
 				} else {
 					alert('Log In Failed');
 				};
-			},
+			}.bind(this),
 		});
 	},
-	handleClick: function (e) {
+	handleLogOut: function (e) {
 		e.preventDefault();
-		this.props.readFromAPI(this.props.origin + '/users', function(blabs) {
-		}.bind(this));
+		sessionStorage.setItem('jwt','')
+		alert('Logged Out')
 	},
   render: function () {
     return (
@@ -57,7 +58,7 @@ var LogIn = React.createClass({
 	      <p>Email: <input onChange={this.handleEmail} value={this.state.email} /></p>
 	      <p>Password: <input onChange={this.handlePassword} value={this.state.password} /></p>
 	      <button onClick={this.handleSubmit}>Log In</button>
-	      <button onClick={this.handleClick}>Click</button>
+	      <button onClick={this.handleLogOut}>Log Out</button>
       </div>
     );
   }

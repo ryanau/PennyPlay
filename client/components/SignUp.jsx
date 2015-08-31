@@ -25,7 +25,7 @@ var SignUp = React.createClass({
 			password: this.state.password,
 		}
 		$.ajax({
-			url: 'http://localhost:3000/users',
+			url: this.props.origin + '/signup',
 			type: 'POST',
 			data: data,
 			dataType: 'json',
@@ -33,6 +33,7 @@ var SignUp = React.createClass({
 			headers: {'Authorization': sessionStorage.getItem('jwt'),
 			},
 			success: function () {
+				window.location = this.props.origin + "/dashboard"
 				console.log('signed up')
 			},
 		});
