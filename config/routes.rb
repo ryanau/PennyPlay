@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   resources :bets, only: [:index, :show, :create]
   resources :users, only: [:create, :index]
   post 'login',  to: 'users#login'
+
+  get '/auth/:provider/callback', :to => 'tokens#create'
+  get '/auth/failure', :to => 'tokens#failure'
   
   match '*all', to: 'client_app#show', via: [:get]
-  # get  '*path', to: 'client_app#show'
-  # root          to: 'client_app#show'
 end
