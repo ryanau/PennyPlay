@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authentication, only: [:index, :create, :login]
+  before_action :authentication, only: [:current]
   
   def create
     if User.find_by(email: params[:email])
@@ -28,6 +29,7 @@ class UsersController < ApplicationController
   end
 
   def current
-    render json: {message: "logged in"}
+    p current_user
+    render json: {uid: current_user.uid, first_name: current_user.first_name, last_name: current_user.last_name}
   end
 end

@@ -23,13 +23,9 @@ Landing = React.createClass({
     	<div>
 	      <h1>Welcome</h1>
 	      <FlatButton
-	        containerElement={<Link to="/signup" />}
 	        linkButton={true}
-	        label={('no', 'Sign in')}/> 
-	      <FlatButton
-	        containerElement={<Link to="/login" />}
-	        linkButton={true}
-	        label={('no', 'Log In')}/> 
+	        label="Authorize with Venmo"
+	        href={this.props.origin + '/auth/venmo'}/> 
       </div>
     );
   }

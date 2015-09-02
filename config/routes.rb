@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :index]
   post 'login',  to: 'users#login'
 
-  get '/auth/:provider/callback', :to => 'tokens#create'
-  get '/auth/failure', :to => 'tokens#failure'
+  get '/current_user', :to => 'users#current'
+
+  get '/auth/venmo/callback', :to => 'sessions#create'
+  get '/auth/failure', :to => 'sessions#failure'
   
   match '*all', to: 'client_app#show', via: [:get]
 end
