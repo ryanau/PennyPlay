@@ -16,7 +16,7 @@ App = React.createClass({
   getInitialState: function () {
     return {
       signedIn: false,
-      currentUser: {uid: null, first_name: null, last_name: null}
+      currentUser: {uid: null, first_name: null, last_name: null, pic: null}
     }
   },
   componentWillMount: function() {
@@ -35,8 +35,11 @@ App = React.createClass({
       headers: {'Authorization': sessionStorage.getItem('jwt'),
       },
       success: function (data) {
-        this.setState({signedIn: true, currentUser: {uid: data.uid, first_name: data.first_name, last_name: data.last_name}});
+        this.setState({signedIn: true, currentUser: {uid: data.uid, first_name: data.first_name, last_name: data.last_name, pic: data.pic}});
         console.log(this.state.currentUser)
+      }.bind(this),
+      error: function(error) {
+        window.location = "/"
       }.bind(this),
     });
 

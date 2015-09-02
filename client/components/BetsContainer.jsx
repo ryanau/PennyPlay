@@ -26,7 +26,6 @@ BetsContainer = React.createClass({
 		}
 	},
 	componentDidMount: function() {
-		console.log('loading')
 	  this.loadBets();
 	},
 
@@ -43,6 +42,9 @@ BetsContainer = React.createClass({
 					bets: bets,
 				});
 				console.log('done');
+			}.bind(this),
+			error: function(error) {
+				window.location = "/"
 			}.bind(this),
 		});
 	},
@@ -71,7 +73,10 @@ BetsContainer = React.createClass({
 			},
 			success: function (data) {
 				this.refs.newBetDialog.dismiss();
-				window.location = this.props.origin + "/dashboard"
+				this.loadBets();
+			}.bind(this),
+			error: function(error) {
+			  window.location = "/"
 			}.bind(this),
 		});
 	},
