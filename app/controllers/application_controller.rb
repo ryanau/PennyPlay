@@ -28,8 +28,6 @@ class ApplicationController < ActionController::API
 
   private
     def authentication
-      p "authen"
-      p request.headers['Authorization']
       begin
         uid = JWT.decode(request.headers['Authorization'], ENV['SECRET_KEY_BASE'])[0]['uid']
         p uid

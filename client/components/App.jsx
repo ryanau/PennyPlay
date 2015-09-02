@@ -10,7 +10,7 @@ App = React.createClass({
 	getDefaultProps: function() {
     // return {origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : ''};
     return {
-      origin: 'http://localhost:3000',
+      origin: 'http://localhost:3000/api',
     }
   },
   getInitialState: function () {
@@ -48,7 +48,7 @@ App = React.createClass({
       <div id="app">
         <NavBar />
         <div id="content">
-          <RouteHandler origin={this.props.origin}/>
+          <RouteHandler origin={this.props.origin} currentUser={this.state.currentUser}/>
         </div>
       </div>
     );

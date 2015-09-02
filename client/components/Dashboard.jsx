@@ -8,6 +8,7 @@ Dashboard = React.createClass({
     return (
     	<div>
 	      <h1>Dashboard</h1>
+	      <h4>Welcome Back {this.props.currentUser.first_name}!</h4>
 	      <BetsContainer origin={this.props.origin}/>
       </div>
     );
