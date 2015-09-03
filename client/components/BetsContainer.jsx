@@ -30,7 +30,7 @@ BetsContainer = React.createClass({
 	},
 
 	loadBets: function () {
-		$.ajax({
+			$.ajax({
 			url: this.props.origin + '/bets',
 			type: 'GET',
 			dataType: 'json',
@@ -59,31 +59,39 @@ BetsContainer = React.createClass({
 	closeModal: function () {
 		this.refs.newBetDialog.dismiss();
 	},
+	refresh: function () {
+		console.log('refresh')
+		this.loadBets();
+	},
 	handleCreateBet: function () {
 		var data = {
 			name: this.state.betName,
 		};
-		$.ajax({
-			url: this.props.origin + '/bets',
-			type: 'POST',
-			data: data,
-			dataType: 'json',
-			crossDomain: true,
-			headers: {'Authorization': sessionStorage.getItem('jwt'),
-			},
-			success: function (data) {
-				this.refs.newBetDialog.dismiss();
-				this.loadBets();
-			}.bind(this),
-			error: function(error) {
-			  window.location = "/"
-			}.bind(this),
-		});
+		if (data.name.length > 0) {
+			$.ajax({
+				url: this.props.origin + '/bets',
+				type: 'POST',
+				data: data,
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'Authorization': sessionStorage.getItem('jwt'),
+				},
+				success: function (data) {
+					this.refs.newBetDialog.dismiss();
+					this.loadBets();
+				}.bind(this),
+				error: function(error) {
+				  window.location = "/"
+				}.bind(this),
+			});
+		}
 	},
-  render: function () {  	if (this.state.bets != 0) {
+  render: function () {  	
+  	if (this.state.bets != 0) {
 	  	var bets = this.state.bets.map(function (bet, index) {
+	  		console.log(bet)
 	  		return (
-	  			<BetContainer key={bet.id} bet={bet} origin={this.props.origin}/>
+	  			<BetContainer key={bet.id} bet={bet} origin={this.props.origin} currentUser={this.props.currentUser} refresh={this.refresh}/>
 	  		);
 	  	}.bind(this));
 	  } else if (this.state.bets === null) {
@@ -106,10 +114,10 @@ BetsContainer = React.createClass({
   			ref="newBetDialog"
   			title="New Bet"
   			actions={DialogAction}
-  			modal={true}>
-  		<TextField
-  			onChange={this.updateBetName}
-  		  floatingLabelText="Bet Name" />
+  			modal={false}>
+	  		<TextField
+	  			onChange={this.updateBetName}
+	  		  floatingLabelText="Bet Name" />
   		</Dialog>
     return (
     	<div>

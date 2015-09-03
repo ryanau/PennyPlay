@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_action :authentication, only: [:index, :create, :login]
-  before_action :authentication, only: [:current]
+  skip_before_action :authentication, only: [:create, :login]
+  before_action :authentication, only: [:current, :index]
   
   def create
     if User.find_by(email: params[:email])
@@ -25,11 +25,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    render json: {message: "alsdfjlkafjs"}
+    user = User.find_by(phone: params[:phone])
+    render json: {data: user}
   end
 
   def current
-    p current_user
     render json: {uid: current_user.uid, first_name: current_user.first_name, last_name: current_user.last_name, pic: current_user.pic}
   end
 end

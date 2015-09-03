@@ -24,7 +24,7 @@ Landing = React.createClass({
 	      <h1>Welcome</h1>
 	      <FlatButton
 	        linkButton={true}
-	        label="Authorize with Venmo"
+	        label="Log In with Venmo"
 	        href={'http://localhost:3000/auth/venmo'}/> 
       </div>
     );

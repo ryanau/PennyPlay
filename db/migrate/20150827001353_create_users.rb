@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :token
       t.string :pic
+      t.string :phone
       t.timestamps null: false
     end
   end

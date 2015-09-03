@@ -12,7 +12,12 @@ class User < ActiveRecord::Base
 
   has_many :users_bets
   has_many :bets, through: :users_bets
+
   has_many :wins, :class_name => "Transaction", :foreign_key => :winner_id
   has_many :losses, :class_name => "Transaction", :foreign_key => :loser_id
+
+  has_many :users_transaction
+  has_many :transactions, through: :users_transaction
+
 
 end
