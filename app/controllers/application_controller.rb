@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   before_action :cors_preflight_check, if: proc { Rails.env.development? }
-  # before_action :authentication
+  # before_action :authentication, only: [:current]
+
   after_action :cors_set_access_control_headers
 
   def cors_set_access_control_headers
@@ -27,11 +28,10 @@ class ApplicationController < ActionController::API
 
   private
     def authentication
-      p "authen"
-      p request.headers['Authorization']
       begin
-        id = JWT.decode(request.headers['Authorization'], ENV['SECRET_KEY_BASE'])[0]['id']
-        @current_user = User.find(id)
+        uid = JWT.decode(request.headers['Authorization'], ENV['SECRET_KEY_BASE'])[0]['uid']
+        p uid
+        @current_user = User.find_by(uid: uid)
 
       rescue JWT::DecodeError
         render json: 'authentication failed', status: 401

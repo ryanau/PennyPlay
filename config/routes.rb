@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
   match '*all', to: 'application#cors_preflight_check', via: [:options]
 
-  resources :bets, only: [:index, :show, :create]
-  resources :users, only: [:create, :index]
+  scope :api do
+    resources :bets, only: [:index, :show, :create]
+    resources :transactions, only: [:create, :index, :show]
+    resources :users, only: [:create, :index]
+    post '/add_user', :to => 'bets#add_user'
+    get '/bet_users', :to => 'bets#users'
+    get '/current_user', :to => 'users#current'
+  end
   post 'login',  to: 'users#login'
+
+  get '/auth/venmo/callback', :to => 'sessions#create'
+  get '/auth/failure', :to => 'sessions#failure'
   
   match '*all', to: 'client_app#show', via: [:get]
-  # get  '*path', to: 'client_app#show'
-  # root          to: 'client_app#show'
 end

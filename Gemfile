@@ -11,6 +11,7 @@ gem 'spring', :group => :development
 gem 'pg'
 gem 'jwt'
 gem 'bcrypt', '~> 3.1.7'
+gem 'omniauth-venmo'
 
 group :development, :test do
   gem 'dotenv-rails'
