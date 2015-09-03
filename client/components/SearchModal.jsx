@@ -25,7 +25,13 @@ SearchModal = React.createClass({
     var data = {
       phone: this.refs.search.getValue()
     };
-    if (data.phone.length == 10) {
+    var signal = true
+    var existingUsers = this.props.users.forEach(function(user) {
+      if (data.phone === user.phone) {
+        signal = false;
+      };
+    });
+    if (data.phone.length == 10 && signal) {
       $.ajax({
         url: this.props.origin + '/users',
         type: 'GET',

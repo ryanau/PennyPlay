@@ -65,7 +65,7 @@ BetsContainer = React.createClass({
 	},
 	handleCreateBet: function () {
 		var data = {
-			name: this.state.betName,
+			name: this.state.betName.toUpperCase(),
 		};
 		if (data.name.length > 0) {
 			$.ajax({
@@ -117,7 +117,8 @@ BetsContainer = React.createClass({
   			modal={false}>
 	  		<TextField
 	  			onChange={this.updateBetName}
-	  		  floatingLabelText="Bet Name" />
+	  		  floatingLabelText="Bet Name" 
+	  		  hintText="Required"/>
   		</Dialog>
     return (
     	<div>

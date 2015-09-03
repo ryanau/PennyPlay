@@ -2,9 +2,11 @@ var React = require('react');
 var $ = require('jquery');
 var Router = require('react-router');
 var Link = Router.Link;
+var Users = require('../users.js');
 var TransactionsContainer = require('./TransactionsContainer.jsx');
 var SearchModal = require('./SearchModal.jsx');
 var TransactionModal = require('./TransactionModal.jsx');
+
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -27,9 +29,24 @@ BetContainer = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  getInitialState: function () {
+    return {
+      usersBasket: new Users
+    }
+  },
+  componentDidMount: function(){
+    this.state.usersBasket.on('change', this.usersChanged);
+  },
+  componentWillUnmount: function(){
+    this.state.usersBasket.off('change');
+  },
+  usersChanged: function(){
+    this.forceUpdate();
+    console.log(this.state.usersBasket);
+  },
   newTransaction: function () {
     var data = {
-      id: this.props.bet.id
+      users: this.state.usersBasket
     };
     $.ajax({
       url: this.props.origin + '/transactions',
@@ -106,15 +123,15 @@ BetContainer = React.createClass({
       title="New Transaction"
       actions={TransactionDialogAction}
       modal={false}>
-      <TransactionModal bet_id={bet.id} origin={this.props.origin} users={bet.users}/>
+      <TransactionModal bet_id={bet.id} origin={this.props.origin} users={bet.users} usersBasket={this.state.usersBasket}/>
     </Dialog>
     var addUserModal = 
     <Dialog
       ref="newAddUserDialog"
-      title="Add User to Bet"
+      title={bet.name}
       actions={AddUserDialogAction}
       modal={false}>
-      <SearchModal origin={this.props.origin} addUser={this.handleAddUser}/>
+      <SearchModal origin={this.props.origin} addUser={this.handleAddUser} users={bet.users}/>
     </Dialog>
     var transactions = bet.transactions.map(function (transaction, index) {
       return (
