@@ -122,8 +122,8 @@ BetsContainer = React.createClass({
   		</Dialog>
     return (
     	<div>
-	      <h2>Bets</h2>
 	      {newBetDialog}
+	      <span />
 	      <FlatButton
 	        label="New Bet"
 	        onClick={this.openModal}/>

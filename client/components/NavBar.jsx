@@ -1,34 +1,34 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
-var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
-
-var Toolbar = mui.Toolbar;
-var ToolbarTitle = mui.ToolbarTitle;
-var ToolbarSeparator = mui.ToolbarSeparator;
-var ToolbarGroup = mui.ToolbarGroup;
-var DropDownMenu = mui.DropDownMenu;
 
 module.exports = React.createClass({
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-  getChildContext: function () {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme()
-    };
+  handleSignOutLink: function() {
+    sessionStorage.setItem('jwt','');
+    location = '/';
   },
   render: function() {
+    if (this.props.signedIn) {
+      var homeLink = <Link to="dashboard">PennyBet</Link>
+      var signingLink = <li onClick={this.handleSignOutLink}><a href="/">Sign Out</a></li>
+    } else {
+      var homeLink = <Link to="/">PennyBet</Link>
+    }
     return (
-      <div id="menu">
-        <Toolbar>
-          <ToolbarGroup key={0} float="left">
-            <Link to="dashboard">Dashboard</Link>
-          </ToolbarGroup>
-          <ToolbarGroup key={1} float="right">
-          </ToolbarGroup>
-        </Toolbar>
+      <div className="fixed">
+        <nav className="top-bar" data-topbar role="navigation">
+          <ul className="title-area">
+            <li className="name">
+              <h1><a href="#">{homeLink}</a></h1>
+            </li>
+          </ul>
+
+          <section className="top-bar-section">
+            <ul className="right">
+              {signingLink}
+            </ul>
+          </section>
+        </nav>
       </div>
     );
   }

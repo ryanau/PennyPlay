@@ -1,4 +1,6 @@
 require('./assets/app.css');
+require('./assets/foundation.min.css');
+require('./assets/normalize.css');
 
 var React = require('react');
 var App = require('./components/App.jsx');

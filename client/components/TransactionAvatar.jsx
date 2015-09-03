@@ -7,6 +7,11 @@ var Avatar = mui.Avatar;
 var Toggle = mui.Toggle;
 
 TransactionAvatar = React.createClass({
+  getInitialState: function () {
+    return {
+      display: "LOSER",
+    }
+  },
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -17,6 +22,15 @@ TransactionAvatar = React.createClass({
   },
   handleToggle: function (e) {
     this.props.usersBasket.addToUsers({user_id: this.props.user.id, winner: this.refs.toggle.isToggled()})
+    if (this.state.display === "WINNER") {
+      this.setState({
+        display: "LOSER"
+      });
+    } else {
+      this.setState({
+        display: "WINNER"
+      })
+    };
   },
   render: function () {
     return (
@@ -25,7 +39,7 @@ TransactionAvatar = React.createClass({
         <Toggle
           ref="toggle"
           onToggle={this.handleToggle}
-          label="WINNER"/>
+          label={this.state.display}/>
       </div>
     )
   },

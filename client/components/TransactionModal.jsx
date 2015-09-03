@@ -14,11 +14,6 @@ TransactionModal = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-  handleToggle: function (e) {
-    this.setState({
-      winner: this.refs.toggle.isToggled()
-    });
-  },
   render: function () {
 		var avatars = this.props.users.map(function (user, index) {
 		  return (
