@@ -25,7 +25,13 @@ SearchModal = React.createClass({
     var data = {
       phone: this.refs.search.getValue()
     };
-    if (data.phone.length == 10) {
+    var signal = true
+    var existingUsers = this.props.users.forEach(function(user) {
+      if (data.phone === user.phone) {
+        signal = false;
+      };
+    });
+    if (data.phone.length == 10 && signal) {
       $.ajax({
         url: this.props.origin + '/users',
         type: 'GET',
@@ -51,6 +57,8 @@ SearchModal = React.createClass({
   render: function () {
     if (this.state.result === null) {
       var result = "Loading users..."
+    } else if (this.state.result.pic == "https://s3.amazonaws.com/venmo/no-image.gif" || this.state.result.pic.substring(0,27) == "https://graph.facebook.com/") {
+      var result = <Avatar onClick={this.handleAvatarClicked}>{this.state.result.first_name.charAt(0) + this.state.result.last_name.charAt(0)}</Avatar>
     } else {
       var result = <Avatar src={this.state.result.pic} onClick={this.handleAvatarClicked}/>
     };

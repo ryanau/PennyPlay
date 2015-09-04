@@ -3,10 +3,7 @@ var $ = require('jquery');
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var Avatar = mui.Avatar;
-var TextField = mui.TextField;
-var FlatButton = mui.FlatButton;
-var Dialog = mui.Dialog;
+var TransactionAvatar = require('./TransactionAvatar.jsx')
 
 TransactionModal = React.createClass({
   childContextTypes: {
@@ -20,7 +17,7 @@ TransactionModal = React.createClass({
   render: function () {
 		var avatars = this.props.users.map(function (user, index) {
 		  return (
-		    <Avatar src={user.pic} key={index} />
+        <TransactionAvatar key={index} users={this.props.users} user={user} usersBasket={this.props.usersBasket}/>
 		  )
 		}.bind(this))
     return (

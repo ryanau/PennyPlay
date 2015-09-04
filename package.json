@@ -31,6 +31,8 @@
     "style-loader": "^0.8.3",
     "webpack": "^1.6.0",
     "webpack-dev-server": "^1.8.0",
-    "material-ui": "0.10.4"
+    "material-ui": "0.10.4",
+    "eventemitter3": "1.1.1",
+    "object-assign" : "3.0.0"
   }
 }

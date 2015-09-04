@@ -41,7 +41,6 @@ BetsContainer = React.createClass({
 				this.setState({
 					bets: bets,
 				});
-				console.log('done');
 			}.bind(this),
 			error: function(error) {
 				window.location = "/"
@@ -65,7 +64,7 @@ BetsContainer = React.createClass({
 	},
 	handleCreateBet: function () {
 		var data = {
-			name: this.state.betName,
+			name: this.state.betName.toUpperCase(),
 		};
 		if (data.name.length > 0) {
 			$.ajax({
@@ -89,7 +88,6 @@ BetsContainer = React.createClass({
   render: function () {  	
   	if (this.state.bets != 0) {
 	  	var bets = this.state.bets.map(function (bet, index) {
-	  		console.log(bet)
 	  		return (
 	  			<BetContainer key={bet.id} bet={bet} origin={this.props.origin} currentUser={this.props.currentUser} refresh={this.refresh}/>
 	  		);
@@ -117,12 +115,13 @@ BetsContainer = React.createClass({
   			modal={false}>
 	  		<TextField
 	  			onChange={this.updateBetName}
-	  		  floatingLabelText="Bet Name" />
+	  		  floatingLabelText="Bet Name" 
+	  		  hintText="Required"/>
   		</Dialog>
     return (
     	<div>
-	      <h2>Bets</h2>
 	      {newBetDialog}
+	      <span />
 	      <FlatButton
 	        label="New Bet"
 	        onClick={this.openModal}/>

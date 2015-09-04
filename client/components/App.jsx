@@ -36,7 +36,6 @@ App = React.createClass({
       },
       success: function (data) {
         this.setState({signedIn: true, currentUser: {uid: data.uid, first_name: data.first_name, last_name: data.last_name, pic: data.pic}});
-        console.log(this.state.currentUser)
       }.bind(this),
       error: function(error) {
         window.location = "/"
@@ -49,8 +48,8 @@ App = React.createClass({
   render: function () {
     return (
       <div id="app">
-        <NavBar />
-        <div id="content">
+        <NavBar signedIn={this.state.signedIn}/>
+        <div className="container">
           <RouteHandler origin={this.props.origin} currentUser={this.state.currentUser}/>
         </div>
       </div>
