@@ -19,6 +19,7 @@ var CardText = mui.CardText;
 var CardActions = mui.CardActions;
 var CardTitle = mui.CardTitle;
 var Avatar = mui.Avatar;
+var Snackbar = mui.Snackbar;
 
 BetContainer = React.createClass({
   childContextTypes: {
@@ -70,8 +71,8 @@ BetContainer = React.createClass({
         headers: {'Authorization': sessionStorage.getItem('jwt'),
         },
         success: function (data) {
-          console.log('transaction created')
           this.closeTransactionModal();
+          this.refs.newTransactionNotification.show();
         }.bind(this),
         error: function(error) {
           window.location = "/"
@@ -94,6 +95,7 @@ BetContainer = React.createClass({
       },
       success: function (data) {
         this.closeAddUserModal();
+        this.refs.newUserNotification.show();
         this.props.refresh();
       }.bind(this),
       error: function(error) {
@@ -113,6 +115,31 @@ BetContainer = React.createClass({
   },
   closeAddUserModal: function () {
     this.refs.newAddUserDialog.dismiss();
+  },
+  handleDeleteBetConfirmation: function () {
+    if (confirm("Are You Sure to Delete Bet?") == true) {
+      this.handleDeleteBet();
+    };
+  },
+  handleDeleteBet: function () {
+    var data = {
+      bet_id: this.props.bet.id,
+    }
+    $.ajax({
+      url: this.props.origin + '/bets/' + this.props.bet.id,
+      type: 'DELETE',
+      data: data,
+      dataType: 'json',
+      crossDomain: true,
+      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      },
+      success: function (data) {
+        this.props.refresh();
+      }.bind(this),
+      error: function(error) {
+        window.location = "/"
+      }.bind(this),
+    });
   },
   render: function () {
     var bet = this.props.bet
@@ -147,8 +174,6 @@ BetContainer = React.createClass({
       modal={false}>
       <TransactionModal bet_id={bet.id} origin={this.props.origin} users={bet.users} usersBasket={this.state.usersBasket}/>
     </Dialog>
-
-
     var addUserModal = 
     <Dialog
       ref="newAddUserDialog"
@@ -179,6 +204,14 @@ BetContainer = React.createClass({
     	<div>
         {addUserModal}
         {transactionModal}
+        <Snackbar
+          ref="newUserNotification"
+          message='User Added'
+          autoHideDuration={2000}/>
+        <Snackbar
+          ref="newTransactionNotification"
+          message='Transaction Created'
+          autoHideDuration={2000}/>
 	      <Card key={bet.id} initiallyExpanded={false}>
           <CardHeader
           title={bet.name}
@@ -192,6 +225,9 @@ BetContainer = React.createClass({
             <FlatButton
               label="Add User to Bet"
               onClick={this.openAddUserModal}/>
+            <FlatButton
+              label="Delete Bet"
+              onClick={this.handleDeleteBetConfirmation}/>
           </CardText>
           <CardText expandable={true}>
           {transactions}

@@ -28,4 +28,8 @@ class BetsController < ApplicationController
     render json: {data: users}
   end
 
+  def destroy
+    Bet.destroy(params[:bet_id])
+    render json: {message: "Bet Deleted"}
+  end
 end

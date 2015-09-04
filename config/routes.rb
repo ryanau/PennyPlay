@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   match '*all', to: 'application#cors_preflight_check', via: [:options]
 
   scope :api do
-    resources :bets, only: [:index, :show, :create]
+    resources :bets, only: [:index, :show, :create, :destroy]
     resources :entries, only: [:create, :index, :show]
     resources :users, only: [:create, :index]
     post '/add_user', :to => 'bets#add_user'
