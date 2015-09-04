@@ -22,7 +22,6 @@ module.exports = React.createClass({
               <h1><a href="#">{homeLink}</a></h1>
             </li>
           </ul>
-
           <section className="top-bar-section">
             <ul className="right">
               {signingLink}

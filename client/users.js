@@ -9,11 +9,12 @@ var Users = function(){
 objectAssign(Users.prototype, EventEmitter.prototype);
 
 Users.prototype.addToUsers = function(data){
+	var i = 0
 	this.users.forEach(function(user) {
-		var i = 0
 		if (user.user_id == data.user_id) {
 			this.users.splice(i, 1)
 		};
+		i++
 	}.bind(this));
   this.users.push(data);
   this.emit('change');

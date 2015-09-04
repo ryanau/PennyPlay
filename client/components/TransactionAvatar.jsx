@@ -20,6 +20,12 @@ TransactionAvatar = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  componentDidMount: function () {
+    this.preLoad();
+  },
+  preLoad: function () {
+    this.props.usersBasket.addToUsers({user_id: this.props.user.id, winner: false})
+  },
   handleToggle: function (e) {
     this.props.usersBasket.addToUsers({user_id: this.props.user.id, winner: this.refs.toggle.isToggled()})
     if (this.state.display === "WINNER") {
@@ -33,9 +39,14 @@ TransactionAvatar = React.createClass({
     };
   },
   render: function () {
+    if (this.props.user.pic == "https://s3.amazonaws.com/venmo/no-image.gif" || this.props.user.pic.substring(0,27) == "https://graph.facebook.com/") {
+      var avatar = <Avatar>{this.props.user.first_name.charAt(0) + this.props.user.last_name.charAt(0)}</Avatar>
+    } else {
+      var avatar = <Avatar src={this.props.user.pic} />
+    };
     return (
       <div>
-        <Avatar src={this.props.user.pic} />
+        {avatar}
         <Toggle
           ref="toggle"
           onToggle={this.handleToggle}
@@ -46,3 +57,4 @@ TransactionAvatar = React.createClass({
 });
 
 module.exports = TransactionAvatar;
+

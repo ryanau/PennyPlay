@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   scope :api do
     resources :bets, only: [:index, :show, :create]
-    resources :transactions, only: [:create, :index, :show]
+    resources :entries, only: [:create, :index, :show]
     resources :users, only: [:create, :index]
     post '/add_user', :to => 'bets#add_user'
     get '/bet_users', :to => 'bets#users'

@@ -2,9 +2,9 @@ class BetsController < ApplicationController
   before_action :authentication
 
   def index
-    bets = current_user.bets.includes(:transactions, :users).order(created_at: :desc)
+    bets = current_user.bets.includes(:entries, :users, entries: [:details]).order(created_at: :desc)
     render json: bets.to_json(
-      include: [:transactions, :users]
+      include: [:entries, :users, :details]
     )
   end
 

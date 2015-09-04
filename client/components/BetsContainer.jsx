@@ -41,7 +41,6 @@ BetsContainer = React.createClass({
 				this.setState({
 					bets: bets,
 				});
-				console.log('done');
 			}.bind(this),
 			error: function(error) {
 				window.location = "/"
@@ -89,7 +88,6 @@ BetsContainer = React.createClass({
   render: function () {  	
   	if (this.state.bets != 0) {
 	  	var bets = this.state.bets.map(function (bet, index) {
-	  		console.log(bet)
 	  		return (
 	  			<BetContainer key={bet.id} bet={bet} origin={this.props.origin} currentUser={this.props.currentUser} refresh={this.refresh}/>
 	  		);

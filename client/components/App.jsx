@@ -36,7 +36,6 @@ App = React.createClass({
       },
       success: function (data) {
         this.setState({signedIn: true, currentUser: {uid: data.uid, first_name: data.first_name, last_name: data.last_name, pic: data.pic}});
-        console.log(this.state.currentUser)
       }.bind(this),
       error: function(error) {
         window.location = "/"
