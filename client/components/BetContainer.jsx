@@ -2,10 +2,12 @@ var React = require('react');
 var $ = require('jquery');
 var Router = require('react-router');
 var Link = Router.Link;
+var moment = require('moment');
 var Users = require('../users.js');
 var TransactionsContainer = require('./TransactionsContainer.jsx');
 var SearchModal = require('./SearchModal.jsx');
 var TransactionModal = require('./TransactionModal.jsx');
+var PendingTransaction = require('./PendingTransaction.jsx');
 
 
 var mui = require('material-ui');
@@ -19,6 +21,7 @@ var CardText = mui.CardText;
 var CardActions = mui.CardActions;
 var CardTitle = mui.CardTitle;
 var Avatar = mui.Avatar;
+var Snackbar = mui.Snackbar;
 
 BetContainer = React.createClass({
   childContextTypes: {
@@ -31,11 +34,13 @@ BetContainer = React.createClass({
   },
   getInitialState: function () {
     return {
-      usersBasket: new Users
+      usersBasket: new Users,
+      pending: false,
     }
   },
   componentDidMount: function(){
     this.state.usersBasket.on('change', this.usersChanged);
+    this.loadPendingTransaction();
   },
   componentWillUnmount: function(){
     this.state.usersBasket.off('change');
@@ -70,14 +75,37 @@ BetContainer = React.createClass({
         headers: {'Authorization': sessionStorage.getItem('jwt'),
         },
         success: function (data) {
-          console.log('transaction created')
           this.closeTransactionModal();
+          this.refs.newTransactionNotification.show();
+          this.loadPendingTransaction();
         }.bind(this),
         error: function(error) {
           window.location = "/"
         }.bind(this),
       }); 
     }
+  },
+  loadPendingTransaction: function () {
+    var data = {
+      bet_id: this.props.bet.id
+    };
+    $.ajax({
+      url: this.props.origin + '/pending',
+      type: 'GET',
+      data: data,
+      dataType: 'json',
+      crossDomain: true,
+      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      },
+      success: function (data) {
+        this.setState({
+          pending: data.pending,
+        })
+      }.bind(this),
+      error: function(error) {
+        window.location = "/"
+      }.bind(this),
+    }); 
   },
   handleAddUser: function (user_id) {
     var data = {
@@ -94,6 +122,7 @@ BetContainer = React.createClass({
       },
       success: function (data) {
         this.closeAddUserModal();
+        this.refs.newUserNotification.show();
         this.props.refresh();
       }.bind(this),
       error: function(error) {
@@ -114,6 +143,31 @@ BetContainer = React.createClass({
   closeAddUserModal: function () {
     this.refs.newAddUserDialog.dismiss();
   },
+  handleDeleteBetConfirmation: function () {
+    if (confirm("Are You Sure to Delete Bet?") == true) {
+      this.handleDeleteBet();
+    };
+  },
+  handleDeleteBet: function () {
+    var data = {
+      bet_id: this.props.bet.id,
+    }
+    $.ajax({
+      url: this.props.origin + '/bets/' + this.props.bet.id,
+      type: 'DELETE',
+      data: data,
+      dataType: 'json',
+      crossDomain: true,
+      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      },
+      success: function (data) {
+        this.props.refresh();
+      }.bind(this),
+      error: function(error) {
+        window.location = "/"
+      }.bind(this),
+    });
+  },
   render: function () {
     var bet = this.props.bet
     var TransactionDialogAction = [
@@ -133,12 +187,6 @@ BetContainer = React.createClass({
         onClick={this.closeAddUserModal}/>
       </div>
     ];
-    if (bet.users.length > 1) {
-      var openTransactionModalButton = 
-      <FlatButton
-        label="New Transaction"
-        onClick={this.openTransactionModal}/>
-    };
     var transactionModal = 
     <Dialog
       ref="newTransactionDialog"
@@ -147,8 +195,6 @@ BetContainer = React.createClass({
       modal={false}>
       <TransactionModal bet_id={bet.id} origin={this.props.origin} users={bet.users} usersBasket={this.state.usersBasket}/>
     </Dialog>
-
-
     var addUserModal = 
     <Dialog
       ref="newAddUserDialog"
@@ -173,25 +219,56 @@ BetContainer = React.createClass({
         )
       };
     }.bind(this))
-    var subInfo = bet.created_at
-    console.log(bet)
+    if (this.state.pending === "true") {
+      var showButtons = 
+      <FlatButton
+        label="Approve"/>
+    } else if (this.state.pending === "approved") {
+      var showButtons = 
+      <FlatButton
+        label="Waiting for others to confirm"
+        disabled={true}/>
+    } else {
+      var showButtons = 
+        <div>
+        <FlatButton
+          label="Add User to Bet"
+          onClick={this.openAddUserModal}/>
+        <FlatButton
+            label="New Transaction"
+            onClick={this.openTransactionModal}/>
+        </div>;
+    };
+    var permanentButtons = 
+      <div>
+        <FlatButton
+          label="Delete Bet"
+          onClick={this.handleDeleteBetConfirmation}/>
+      </div>
+    var subInfo = moment(bet.created_at).fromNow();
     return (
     	<div>
         {addUserModal}
         {transactionModal}
+        <Snackbar
+          ref="newUserNotification"
+          message='User Added'
+          autoHideDuration={2000}/>
+        <Snackbar
+          ref="newTransactionNotification"
+          message='Transaction Created'
+          autoHideDuration={2000}/>
 	      <Card key={bet.id} initiallyExpanded={false}>
           <CardHeader
           title={bet.name}
           subtitle={subInfo}
-          avatar={<Avatar>AB</Avatar>}
+          avatar={<Avatar>{bet.name.charAt(0)}</Avatar>}
           showExpandableButton={true} />
           <CardText>
             {avatars}
             <span />
-            {openTransactionModalButton}
-            <FlatButton
-              label="Add User to Bet"
-              onClick={this.openAddUserModal}/>
+            {showButtons}
+            {permanentButtons}
           </CardText>
           <CardText expandable={true}>
           {transactions}

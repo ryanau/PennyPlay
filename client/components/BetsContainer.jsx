@@ -6,6 +6,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var FlatButton = mui.FlatButton;
 var Dialog = mui.Dialog;
 var TextField = mui.TextField;
+var Snackbar = mui.Snackbar;
 
 var BetContainer = require('./BetContainer.jsx')
 
@@ -59,7 +60,6 @@ BetsContainer = React.createClass({
 		this.refs.newBetDialog.dismiss();
 	},
 	refresh: function () {
-		console.log('refresh')
 		this.loadBets();
 	},
 	handleCreateBet: function () {
@@ -77,6 +77,7 @@ BetsContainer = React.createClass({
 				},
 				success: function (data) {
 					this.refs.newBetDialog.dismiss();
+					this.refs.newBetNotification.show();
 					this.loadBets();
 				}.bind(this),
 				error: function(error) {
@@ -121,6 +122,10 @@ BetsContainer = React.createClass({
     return (
     	<div>
 	      {newBetDialog}
+	      <Snackbar
+	      	ref="newBetNotification"
+	        message='Bet Created'
+	        autoHideDuration={2000}/>
 	      <span />
 	      <FlatButton
 	        label="New Bet"

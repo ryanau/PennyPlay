@@ -26,9 +26,10 @@ ActiveRecord::Schema.define(version: 20150904061339) do
     t.integer  "winner_id"
     t.integer  "loser_id"
     t.integer  "entry_id"
-    t.boolean  "approved"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "approved",         default: false
+    t.integer  "approved_user_id"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "entries", force: :cascade do |t|

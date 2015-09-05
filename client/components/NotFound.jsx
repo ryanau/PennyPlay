@@ -6,7 +6,7 @@ NotFound = React.createClass({
   render: function () {
     return (
       <div>
-      Route Not Found
+      	<h4>Awwwwww... The page you're looking for doesn't exist...</h4>
       </div>
     );
   }
