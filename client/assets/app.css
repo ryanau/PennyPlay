@@ -7,3 +7,30 @@ html * {
 	margin-left: 50px;
 	margin-right: 50px;
 }
+
+#landing {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#landing img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+#venmo {
+	text-align: center;
+	color: white;
+	width: 100%;
+	position: absolute;
+	top: 35%;
+	left: -0.5%;
+}

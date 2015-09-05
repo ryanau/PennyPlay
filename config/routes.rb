@@ -3,9 +3,11 @@ Rails.application.routes.draw do
 
   scope :api do
     resources :bets, only: [:index, :show, :create, :destroy]
-    resources :entries, only: [:create, :index, :show]
+    resources :entries, only: [:create, :index]
     resources :users, only: [:create, :index]
     post '/add_user', :to => 'bets#add_user'
+    post '/approve', :to => 'entries#approve'
+    get '/pending', :to => 'entries#pending'
     get '/bet_users', :to => 'bets#users'
     get '/current_user', :to => 'users#current'
   end

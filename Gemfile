@@ -12,6 +12,7 @@ gem 'pg'
 gem 'jwt'
 gem 'bcrypt', '~> 3.1.7'
 gem 'omniauth-venmo'
+gem 'twilio-ruby', '~> 4.2.1'
 
 group :development, :test do
   gem 'dotenv-rails'

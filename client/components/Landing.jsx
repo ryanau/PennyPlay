@@ -1,8 +1,7 @@
 var React = require('react');
-var SignUp = require('./SignUp.jsx');
-var LogIn = require('./LogIn.jsx');
 var Router = require('react-router');
 var Link = Router.Link;
+
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -21,11 +20,16 @@ Landing = React.createClass({
   render: function () {
     return (
     	<div>
-	      <h1>Welcome</h1>
-	      <FlatButton
-	        linkButton={true}
-	        label="Log In with Venmo"
-	        href={'http://localhost:3000/auth/venmo'}/> 
+    		<div id="landing">
+					<img src="DSC_2115.jpg" alt="" />
+				</div>
+				<div id="venmo">
+			    <h4>It is time to challenge your friends.</h4>
+		      <FlatButton
+		        linkButton={true}
+		        label="Log In with Venmo"
+		        href={'http://localhost:3000/auth/venmo'}/> 
+	      </div>
       </div>
     );
   }
