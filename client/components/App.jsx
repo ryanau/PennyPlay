@@ -10,7 +10,7 @@ App = React.createClass({
 	getDefaultProps: function() {
     // return {origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : ''};
     return {
-      origin: 'http://localhost:3000/api',
+      origin: '/api',
     }
   },
   getInitialState: function () {
