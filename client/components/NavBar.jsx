@@ -9,7 +9,7 @@ module.exports = React.createClass({
   },
   render: function() {
     if (this.props.signedIn) {
-      var homeLink = <Link to="dashboard">PennyBet</Link>
+      var homeLink = <Link to="dashboard">PennyPlay</Link>
       var signingLink = <li onClick={this.handleSignOutLink}><a href="/">Sign Out</a></li>
     } else {
       var homeLink = <Link to="/">PennyBet</Link>

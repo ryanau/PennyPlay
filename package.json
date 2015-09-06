@@ -1,7 +1,7 @@
 {
-  "name": "PennyBet",
+  "name": "PennyPlay",
   "version": "0.0.1",
-  "description": "making bets with your friends",
+  "description": "It is time to challenge your friends.",
   "main": "client/main.jsx",
   "repository": {
     "type": "git",
