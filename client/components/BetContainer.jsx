@@ -14,7 +14,6 @@ var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var FlatButton = mui.FlatButton;
 var Dialog = mui.Dialog;
-var TextField = mui.TextField;
 var Card = mui.Card;
 var CardHeader = mui.CardHeader;
 var CardText = mui.CardText;
@@ -36,6 +35,8 @@ BetContainer = React.createClass({
     return {
       usersBasket: new Users,
       pending: false,
+      winners: null,
+      losers: null,
     }
   },
   componentDidMount: function(){
@@ -100,7 +101,10 @@ BetContainer = React.createClass({
       success: function (data) {
         this.setState({
           pending: data.pending,
+          winners: data.winners,
+          losers: data.losers,
         })
+        console.log(data)
       }.bind(this),
       error: function(error) {
         window.location = "/"
@@ -168,6 +172,28 @@ BetContainer = React.createClass({
       }.bind(this),
     });
   },
+  handleApprove: function () {
+    var data = {
+      bet_id: this.props.bet.id,
+    }
+    $.ajax({
+      url: this.props.origin + '/approve',
+      type: 'POST',
+      data: data,
+      dataType: 'json',
+      crossDomain: true,
+      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      },
+      success: function (data) {
+        this.refs.approvedNotification.show();
+        this.props.refresh();
+        this.loadPendingTransaction();
+      }.bind(this),
+      error: function(error) {
+        window.location = "/"
+      }.bind(this),
+    });
+  },
   render: function () {
     var bet = this.props.bet
     var TransactionDialogAction = [
@@ -177,7 +203,8 @@ BetContainer = React.createClass({
         onClick={this.closeTransactionModal}/>
       <FlatButton
         label="Create Transaction"
-        onClick={this.newTransaction}/> 
+        onClick={this.newTransaction}
+        secondary={true}/> 
       </div>
     ];
     var AddUserDialogAction = [
@@ -203,11 +230,6 @@ BetContainer = React.createClass({
       modal={false}>
       <SearchModal origin={this.props.origin} addUser={this.handleAddUser} users={bet.users}/>
     </Dialog>
-    var transactions = bet.entries.map(function (entry, index) {
-      return (
-        <TransactionsContainer origin={this.props.origin} key={entry.id} entry={entry} currentUser={this.props.currentUser}/>
-      );
-    }.bind(this));
     var avatars = bet.users.map(function (user, index) {
       if (user.pic == "https://s3.amazonaws.com/venmo/no-image.gif" || user.pic.substring(0,27) == "https://graph.facebook.com/") {
         return (
@@ -221,22 +243,44 @@ BetContainer = React.createClass({
     }.bind(this))
     if (this.state.pending === "true") {
       var showButtons = 
-      <FlatButton
-        label="Approve"/>
+      <div>
+        <FlatButton
+          label="Approve"
+          onClick={this.handleApprove}
+          secondary={true}/>
+        <FlatButton
+          label="Delete Bet"
+          onClick={this.handleDeleteBetConfirmation}
+          primary={true}/>
+        <PendingTransaction bet={bet} winners={this.state.winners} losers={this.state.losers}/>
+      </div>
     } else if (this.state.pending === "approved") {
       var showButtons = 
-      <FlatButton
-        label="Waiting for others to confirm"
-        disabled={true}/>
+      <div>
+        <FlatButton
+          label="Waiting for others to confirm"
+          disabled={true}/>
+        <FlatButton
+          label="Delete Bet"
+          onClick={this.handleDeleteBetConfirmation}
+          primary={true}/>
+        <PendingTransaction bet={bet} winners={this.state.winners} losers={this.state.losers}/>
+      </div>
     } else {
       var showButtons = 
         <div>
         <FlatButton
           label="Add User to Bet"
-          onClick={this.openAddUserModal}/>
+          onClick={this.openAddUserModal}
+          secondary={true}/>
         <FlatButton
             label="New Transaction"
-            onClick={this.openTransactionModal}/>
+            onClick={this.openTransactionModal}
+            secondary={true}/>
+        <FlatButton
+          label="Delete Bet"
+          onClick={this.handleDeleteBetConfirmation}
+          primary={true}/>
         </div>;
     };
     var permanentButtons = 
@@ -258,6 +302,10 @@ BetContainer = React.createClass({
           ref="newTransactionNotification"
           message='Transaction Created'
           autoHideDuration={2000}/>
+        <Snackbar
+          ref="approvedNotification"
+          message='Transaction Approved'
+          autoHideDuration={2000}/>
 	      <Card key={bet.id} initiallyExpanded={false}>
           <CardHeader
           title={bet.name}
@@ -265,13 +313,13 @@ BetContainer = React.createClass({
           avatar={<Avatar>{bet.name.charAt(0)}</Avatar>}
           showExpandableButton={true} />
           <CardText>
-            {avatars}
-            <span />
-            {showButtons}
-            {permanentButtons}
+              {avatars}
+            <div className="betButtons">
+              {showButtons}
+            </div>
           </CardText>
           <CardText expandable={true}>
-          {transactions}
+          <TransactionsContainer origin={this.props.origin} entries={bet.entries} currentUser={this.props.currentUser}/>
           </CardText>
           <CardActions expandable={true}></CardActions>
         </Card>

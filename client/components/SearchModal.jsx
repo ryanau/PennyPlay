@@ -6,6 +6,7 @@ var ThemeManager = new mui.Styles.ThemeManager();
 var Avatar = mui.Avatar;
 var TextField = mui.TextField;
 var FlatButton = mui.FlatButton;
+var Styles = mui.Styles;
 
 SearchModal = React.createClass({
   childContextTypes: {
@@ -67,7 +68,8 @@ SearchModal = React.createClass({
       <TextField
         ref="search"
         onChange={this.fetchUser}
-        floatingLabelText="Search by Phone" />
+        hintText="Search by Phone"
+        underlineFocusStyle={{borderColor: Styles.amber900}}/>
       <p>Add User by Clicking the Icon</p>
       {result}
       </div>

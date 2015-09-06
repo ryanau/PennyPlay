@@ -1,5 +1,5 @@
+require 'httparty'
 class BetsController < ApplicationController
-  # include Twilio
   before_action :authentication
 
   def index
@@ -11,8 +11,6 @@ class BetsController < ApplicationController
 
   def create
     bet = current_user.bets.create(name: params[:name])
-
-    # twilio(current_user.phone)
 
     render json: {message: "Bet Created", id: bet.id}
   end
@@ -35,18 +33,5 @@ class BetsController < ApplicationController
   def destroy
     Bet.destroy(params[:bet_id])
     render json: {message: "Bet Deleted"}
-  end
-
-  private
-  def twilio(phone)
-    phone = '+1' + phone.to_s
-    account_sid = ENV['TWILIO_ACCOUNT_SID']
-    auth_token = ENV['TWILIO_AUTH_TOKEN']
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.messages.create(
-      from: '+12564742468',
-      to: phone,
-      body: 'sup bitch!'
-    )
   end
 end

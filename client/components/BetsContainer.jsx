@@ -4,6 +4,7 @@ var $ = require('jquery');
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var FlatButton = mui.FlatButton;
+var RaisedButton = mui.RaisedButton;
 var Dialog = mui.Dialog;
 var TextField = mui.TextField;
 var Snackbar = mui.Snackbar;
@@ -127,10 +128,13 @@ BetsContainer = React.createClass({
 	        message='Bet Created'
 	        autoHideDuration={2000}/>
 	      <span />
-	      <FlatButton
+	      <RaisedButton
 	        label="New Bet"
-	        onClick={this.openModal}/>
-	      <p>{bets}</p>
+	        onClick={this.openModal}
+	        secondary={true}/>
+	      <div className="betContainer">
+		      {bets}
+	      </div>
       </div>
     );
   }
