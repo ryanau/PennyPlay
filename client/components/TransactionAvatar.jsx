@@ -46,7 +46,14 @@ TransactionAvatar = React.createClass({
     };
     return (
       <div>
-        {avatar}
+        <div>
+          <div className="Fl-l">
+            {avatar} 
+          </div>
+          <div className="Fl-l Mx-10">
+            {this.props.user.first_name}
+          </div>
+        </div>
         <Toggle
           ref="toggle"
           onToggle={this.handleToggle}

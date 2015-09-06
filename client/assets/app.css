@@ -3,7 +3,7 @@ html * {
 }
 
 .container {
-	margin-top: 50px;
+	margin-top: 60px;
 	margin-left: 50px;
 	margin-right: 50px;
 }
@@ -34,3 +34,30 @@ html * {
 	top: 35%;
 	left: -0.5%;
 }
+
+.betContainerButtons {
+  float: left;
+}
+
+.betButtons {
+  margin-top: 10px;
+}
+
+.betContainer {
+  margin-top: 10px;
+}
+
+.Fl-l {
+  float: left;
+}
+
+.Fl-r {
+  float: right;
+}
+
+.Mx-10 {
+  margin-left: 10px;
+}
+
+
+

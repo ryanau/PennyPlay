@@ -3,11 +3,11 @@ var $ = require('jquery');
 
 TransactionsContainer = React.createClass({
   render: function () {
-  	var entry = this.props.entry;
+  	var entries = this.props.entries;
     return (
     	<div>
 	      <h4>Past Transactions</h4>
-	      {entry}
+	      {entries}
       </div>
     );
   }

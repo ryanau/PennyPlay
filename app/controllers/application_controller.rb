@@ -30,7 +30,6 @@ class ApplicationController < ActionController::API
     def authentication
       begin
         uid = JWT.decode(request.headers['Authorization'], ENV['SECRET_KEY_BASE'])[0]['uid']
-        p uid
         @current_user = User.find_by(uid: uid)
 
       rescue JWT::DecodeError

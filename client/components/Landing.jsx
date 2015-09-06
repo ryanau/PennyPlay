@@ -18,6 +18,18 @@ Landing = React.createClass({
 	  };
 	},
   render: function () {
+  	if (this.props.signedIn) {
+		 	var button = 
+		 	<FlatButton
+		 		containerElement={<Link to="/dashboard" />}
+		 		linkButton={true}
+		 		label={('no', 'Start the Challenge')}/>
+		} else {
+			var button = <FlatButton
+			  linkButton={true}
+			  label="Log In with Venmo"
+			  href={'http://localhost:3000/auth/venmo'}/>
+		}
     return (
     	<div>
     		<div id="landing">
@@ -25,10 +37,7 @@ Landing = React.createClass({
 				</div>
 				<div id="venmo">
 			    <h4>It is time to challenge your friends.</h4>
-		      <FlatButton
-		        linkButton={true}
-		        label="Log In with Venmo"
-		        href={'http://localhost:3000/auth/venmo'}/> 
+		      {button}
 	      </div>
       </div>
     );
