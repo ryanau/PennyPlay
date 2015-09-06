@@ -185,7 +185,9 @@ BetContainer = React.createClass({
       headers: {'Authorization': sessionStorage.getItem('jwt'),
       },
       success: function (data) {
-        console.log(data.message)
+        this.refs.approvedNotification.show();
+        this.props.refresh();
+        this.loadPendingTransaction();
       }.bind(this),
       error: function(error) {
         window.location = "/"
@@ -299,6 +301,10 @@ BetContainer = React.createClass({
         <Snackbar
           ref="newTransactionNotification"
           message='Transaction Created'
+          autoHideDuration={2000}/>
+        <Snackbar
+          ref="approvedNotification"
+          message='Transaction Approved'
           autoHideDuration={2000}/>
 	      <Card key={bet.id} initiallyExpanded={false}>
           <CardHeader
