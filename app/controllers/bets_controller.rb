@@ -3,10 +3,8 @@ class BetsController < ApplicationController
   before_action :authentication
 
   def index
-    bets = current_user.bets.includes(:entries, entries: [:details]).order(created_at: :DESC).order('entries.updated_at')
-    render json: bets.to_json(
-      include: [:entries, :details]
-    )
+    bets = current_user.bets.includes(:entries).order(created_at: :DESC).order('entries.updated_at')
+    render json: bets
   end
 
   def create

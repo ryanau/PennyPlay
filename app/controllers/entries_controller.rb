@@ -16,6 +16,11 @@ class EntriesController < ApplicationController
     render json: {message: "Entry created"}
   end
 
+  def index
+    entries = Entry.where(bet_id: params[:bet_id]).includes(:details)
+    render json: {entries: entries}
+  end
+
   def pending
     if Bet.find(params[:bet_id]).entries.length != 0
       if Bet.find(params[:bet_id]).entries.last.details.where(approved: false).length > 0

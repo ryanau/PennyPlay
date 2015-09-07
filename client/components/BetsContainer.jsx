@@ -97,7 +97,7 @@ BetsContainer = React.createClass({
 	  } else if (this.state.bets === null) {
   		var bets = "Loading..."
   	} else {
-	  	var bets = "You have no bets. Click New Bet to get started!"
+	  	var bets = "You have no challenges Click New Challenge to get started!"
   	};
   	var DialogAction = [
   		<div>
@@ -105,19 +105,19 @@ BetsContainer = React.createClass({
   		  label="Cancel"
   		  onClick={this.closeModal}/>
   		<FlatButton
-  		  label="Create Bet"
+  		  label="Create Challenge"
   		  onClick={this.handleCreateBet}/> 
   		</div>
   	]
   	var newBetDialog =
   		<Dialog
   			ref="newBetDialog"
-  			title="New Bet"
+  			title="New Challenge"
   			actions={DialogAction}
   			modal={false}>
 	  		<TextField
 	  			onChange={this.updateBetName}
-	  		  floatingLabelText="Bet Name" 
+	  		  floatingLabelText="Challenge Name" 
 	  		  hintText="Required"/>
   		</Dialog>
     return (
@@ -125,11 +125,11 @@ BetsContainer = React.createClass({
 	      {newBetDialog}
 	      <Snackbar
 	      	ref="newBetNotification"
-	        message='Bet Created'
+	        message='Challenge Created'
 	        autoHideDuration={2000}/>
 	      <span />
 	      <RaisedButton
-	        label="New Bet"
+	        label="New Challenge"
 	        onClick={this.openModal}
 	        secondary={true}/>
 	      <div className="betContainer">
