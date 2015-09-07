@@ -20,15 +20,14 @@ PendingTransaction = React.createClass({
     };
   },
   render: function () {
-    console.log(this.props.winners[0].first_name)
-    var winners = this.props.winners.map(function (winner, index){
+    var winners = this.props.winners.map(function (winner_name, index){
       return (
-        <ListItem key={index} primaryText={winner.first_name} />
+        <ListItem key={index} primaryText={winner_name} />
       )
     });
-    var losers = this.props.losers.map(function (loser, index){
+    var losers = this.props.losers.map(function (loser_name, index){
       return (
-        <ListItem key={index} primaryText={loser.first_name} />
+        <ListItem key={index} primaryText={loser_name} />
       )
     })
     return (

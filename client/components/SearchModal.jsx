@@ -28,7 +28,7 @@ SearchModal = React.createClass({
     };
     var signal = true
     var existingUsers = this.props.users.forEach(function(user) {
-      if (data.phone === user.phone) {
+      if (data.phone === user[3]) {
         signal = false;
       };
     });

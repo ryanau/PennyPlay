@@ -1,7 +1,7 @@
 {
-  "name": "PennyBet",
+  "name": "PennyPlay",
   "version": "0.0.1",
-  "description": "making bets with your friends",
+  "description": "It is time to challenge your friends.",
   "main": "client/main.jsx",
   "repository": {
     "type": "git",
@@ -9,16 +9,15 @@
   },
   "scripts": {
     "devserve": "webpack-dev-server -d --config webpack.config.js --content-base public/ --progress --colors",
-    "devbuild": "webpack -d --config webpack.config.js --profile --progress --colors"
+    "devbuild": "webpack -d --config webpack.config.js --profile --progress --colors",
+    "probuild": "webpack -p --config webpack.pro.config.js --profile --progress --colors",
+    "postinstall": "npm run probuild && npm run rejoice",
+    "rejoice": "echo yay!"
   },
   "author": "Ryan Au",
   "license": "MIT",
   "engines": {
     "node": "0.10.x"
-  },
-  "scripts": {
-    "devserve": "webpack-dev-server -d --config webpack.dev.config.js --content-base public/ --progress --colors",
-    "devbuild": "webpack -d --config webpack.dev.config.js --profile --progress --colors"
   },
   "dependencies": {
     "jquery": "^2.1.3",

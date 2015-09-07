@@ -6,7 +6,7 @@ gem 'rails', '4.2.3'
 gem 'rails-api'
 
 gem 'spring', :group => :development
-
+gem 'puma'
 
 gem 'pg'
 gem 'jwt'
@@ -19,6 +19,10 @@ group :development, :test do
   gem 'dotenv-rails'
   # gem 'pry-rails'
   # gem 'pry-byebug'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 # To use ActiveModel has_secure_password

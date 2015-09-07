@@ -37,11 +37,13 @@ BetContainer = React.createClass({
       pending: false,
       winners: null,
       losers: null,
+      users: null,
     }
   },
   componentDidMount: function(){
     this.state.usersBasket.on('change', this.usersChanged);
     this.loadPendingTransaction();
+    this.loadUsers();
   },
   componentWillUnmount: function(){
     this.state.usersBasket.off('change');
@@ -104,7 +106,28 @@ BetContainer = React.createClass({
           winners: data.winners,
           losers: data.losers,
         })
-        console.log(data)
+      }.bind(this),
+      error: function(error) {
+        window.location = "/"
+      }.bind(this),
+    }); 
+  },
+  loadUsers: function () {
+    var data = {
+      bet_id: this.props.bet.id
+    };
+    $.ajax({
+      url: this.props.origin + '/bet_users',
+      type: 'GET',
+      data: data,
+      dataType: 'json',
+      crossDomain: true,
+      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      },
+      success: function (data) {
+        this.setState({
+          users: data.data
+        });
       }.bind(this),
       error: function(error) {
         window.location = "/"
@@ -127,7 +150,7 @@ BetContainer = React.createClass({
       success: function (data) {
         this.closeAddUserModal();
         this.refs.newUserNotification.show();
-        this.props.refresh();
+        this.loadUsers();
       }.bind(this),
       error: function(error) {
         window.location = "/"
@@ -220,7 +243,7 @@ BetContainer = React.createClass({
       title="New Transaction"
       actions={TransactionDialogAction}
       modal={false}>
-      <TransactionModal bet_id={bet.id} origin={this.props.origin} users={bet.users} usersBasket={this.state.usersBasket}/>
+      <TransactionModal bet_id={bet.id} origin={this.props.origin} users={this.state.users} usersBasket={this.state.usersBasket}/>
     </Dialog>
     var addUserModal = 
     <Dialog
@@ -228,19 +251,23 @@ BetContainer = React.createClass({
       title={bet.name}
       actions={AddUserDialogAction}
       modal={false}>
-      <SearchModal origin={this.props.origin} addUser={this.handleAddUser} users={bet.users}/>
+      <SearchModal origin={this.props.origin} addUser={this.handleAddUser} users={this.state.users}/>
     </Dialog>
-    var avatars = bet.users.map(function (user, index) {
-      if (user.pic == "https://s3.amazonaws.com/venmo/no-image.gif" || user.pic.substring(0,27) == "https://graph.facebook.com/") {
-        return (
-          <Avatar>{user.first_name.charAt(0) + user.last_name.charAt(0)}</Avatar>
-        )
-      } else {
-        return (
-          <Avatar src={user.pic} key={index} />
-        )
-      };
-    }.bind(this))
+    if (this.state.users === null) {
+      var avatars = "Loading users..."
+    } else {
+      var avatars = this.state.users.map(function (user, index) {
+        if (user[2] == "https://s3.amazonaws.com/venmo/no-image.gif" || user[2].substring(0,27) == "https://graph.facebook.com/") {
+          return (
+            <Avatar>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
+          )
+        } else {
+          return (
+            <Avatar src={user[2]} key={index} />
+          )
+        };
+      }.bind(this)) 
+    }
     if (this.state.pending === "true") {
       var showButtons = 
       <div>
