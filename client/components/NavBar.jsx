@@ -12,7 +12,7 @@ module.exports = React.createClass({
       var homeLink = <Link to="dashboard">PennyPlay</Link>
       var signingLink = <li onClick={this.handleSignOutLink}><a href="/">Sign Out</a></li>
     } else {
-      var homeLink = <Link to="/">PennyBet</Link>
+      var homeLink = <Link to="/">PennyPlay</Link>
     }
     return (
       <div className="fixed">

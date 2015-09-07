@@ -97,7 +97,7 @@ BetsContainer = React.createClass({
 	  } else if (this.state.bets === null) {
   		var bets = "Loading..."
   	} else {
-	  	var bets = "You have no bets. Click create to get started!"
+	  	var bets = "You have no bets. Click New Bet to get started!"
   	};
   	var DialogAction = [
   		<div>
