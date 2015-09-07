@@ -33,7 +33,6 @@ Landing = React.createClass({
     return (
     	<div>
     		<div id="landing">
-					<img src="DSC_2115.jpg" alt="" />
 				</div>
 				<div id="venmo">
 			    <h4>It is time to challenge your friends.</h4>
