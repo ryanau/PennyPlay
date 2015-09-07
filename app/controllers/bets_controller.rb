@@ -3,9 +3,9 @@ class BetsController < ApplicationController
   before_action :authentication
 
   def index
-    bets = current_user.bets.includes(:entries, :users, entries: [:details]).order(created_at: :DESC).order('entries.updated_at')
+    bets = current_user.bets.includes(:entries, entries: [:details]).order(created_at: :DESC).order('entries.updated_at')
     render json: bets.to_json(
-      include: [:entries, :users, :details]
+      include: [:entries, :details]
     )
   end
 
@@ -26,7 +26,7 @@ class BetsController < ApplicationController
   end
 
   def users
-    users = Bet.find(params[:bet_id]).users
+    users = Bet.find(params[:bet_id]).users.pluck(:first_name, :last_name, :pic, :phone, :id)
     render json: {data: users}
   end
 

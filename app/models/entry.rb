@@ -1,5 +1,6 @@
 class Entry < ActiveRecord::Base
   belongs_to :bet
+  
   has_many :details, dependent: :destroy
 
   has_many :wins, :class_name => "Detail", :foreign_key => :winner_id

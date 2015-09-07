@@ -26,13 +26,13 @@ class EntriesController < ApplicationController
             losers = []
             losers_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(loser_id: 0)
             losers_arr.each do |loser|
-              losers << User.find(loser.loser_id)
+              losers << User.find(loser.loser_id).first_name
             end
             
             winners = []
             winners_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(winner_id: 0)
             winners_arr.each do |winner|
-              winners << User.find(winner.winner_id)
+              winners << User.find(winner.winner_id).first_name
             end
         else
           pending = "true"
@@ -40,13 +40,13 @@ class EntriesController < ApplicationController
           losers = []
           losers_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(loser_id: 0)
           losers_arr.each do |loser|
-            losers << User.find(loser.loser_id)
+            losers << User.find(loser.loser_id).first_name
           end
           
           winners = []
           winners_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(winner_id: 0)
           winners_arr.each do |winner|
-            winners << User.find(winner.winner_id)
+            winners << User.find(winner.winner_id).first_name
           end
         end
       end
@@ -113,7 +113,7 @@ class EntriesController < ApplicationController
     auth_token = ENV['TWILIO_AUTH_TOKEN']
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
-      from: '+14152148230',
+      from: 'PennyPlay',
       to: phone,
       body: 'PennyPlay: You have just made a payment on Venmo'
     )
