@@ -82,8 +82,8 @@ class EntriesController < ApplicationController
       bet_id = body[3, body.length]
       bet = user.bets.where(id: bet_id)[0]
 
-      if bet.entries.last.confirmations.where(user_id: current_user.id).count == 0
-        bet.entries.last.confirmations.create(user_id: current_user.id, approved: true)
+      if bet.entries.last.confirmations.where(user_id: user.id).count == 0
+        bet.entries.last.confirmations.create(user_id: user.id, approved: true)
       end
       create_venmo_transaction(bet)
     end
