@@ -71,12 +71,12 @@ class EntriesController < ApplicationController
   end
 
   def sms_approve
-    from = params[:from].substring(2,11)
+    from = params[:from]
     body = params[:body]
 
     user = User.find_by(phone: from)
-    if body.substring(0,2) === "YES"
-      bet_id = body.substring(3, body.length -1)
+    if body[0,3] === "YES"
+      bet_id = body[4, body.length]
       bet = user.bets.where(id: bet_id)[0]
 
       if bet.entries.last.confirmations.where(user_id: current_user.id).count == 0
