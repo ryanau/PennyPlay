@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get '/pending', :to => 'entries#pending'
     get '/bet_users', :to => 'bets#users'
     get '/current_user', :to => 'users#current'
+    get '/bet_stats', :to => 'bets#stats'
     post '/sms_approve', :to => 'entries#sms_approve'
   end
   post 'login',  to: 'users#login'

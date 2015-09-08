@@ -147,13 +147,13 @@ class EntriesController < ApplicationController
 
       bet_name = bet.name
 
-      message = "PennyPlay: Winners are #{winners}and losers are #{losers} for the bet #{bet_name}"
+      message = "PennyPlay: Winners are #{winners}and losers are #{losers} for the challenge: #{bet_name}"
 
       losers_arr.each do |loser|
         winners_uids_arr.each do |winner_uid|
           venmo_post(loser[0], message, winner_uid)
         end
-          twilio_loser_notification(loser[1], bet_name)
+          # twilio_loser_notification(loser[1], bet_name)
       end
     end
   end
@@ -189,7 +189,7 @@ class EntriesController < ApplicationController
     @client.messages.create(
       from: "+14152148230",
       to: phone,
-      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}.Reply with YES#{bet_id} to approve entry."
+      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}- Reply with YES#{bet_id} to approve entry."
     )
   end
 

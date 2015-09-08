@@ -346,7 +346,7 @@ BetContainer = React.createClass({
             </div>
           </CardText>
           <CardText expandable={true}>
-          <BetStats />
+          <BetStats bet={bet} origin={this.props.origin}/>
           </CardText>
           <CardActions expandable={true}></CardActions>
         </Card>
