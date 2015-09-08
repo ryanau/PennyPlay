@@ -22,26 +22,21 @@ PendingTransaction = React.createClass({
   render: function () {
     var winners = this.props.winners.map(function (winner_name, index){
       return (
-        <ListItem key={index} primaryText={winner_name} />
+        {winner_name}
       )
     });
     var losers = this.props.losers.map(function (loser_name, index){
       return (
-        <ListItem key={index} primaryText={loser_name} />
+        {loser_name}
       )
-    })
+    });
+    var info = moment(this.props.bet.entries[this.props.bet.entries.length -1].created_at).fromNow()
     return (
       <div>
-        <h4>Pending</h4>
-        <List>
-          <p>Winners</p>
-          {winners}
-        </List>
-        <ListDivider />
-        <List>
-          <p>Losers</p>
-          {losers}
-        </List>
+        <p>Pending Entry from {info}</p>
+          <p>Winners: {winners}</p>
+          <p>Losers: {losers}</p>
+          
       </div>
     )
   }

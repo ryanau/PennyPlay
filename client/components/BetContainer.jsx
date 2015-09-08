@@ -8,7 +8,7 @@ var TransactionsContainer = require('./TransactionsContainer.jsx');
 var SearchModal = require('./SearchModal.jsx');
 var TransactionModal = require('./TransactionModal.jsx');
 var PendingTransaction = require('./PendingTransaction.jsx');
-
+var BetStats = require('./BetStats.jsx');
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -346,7 +346,7 @@ BetContainer = React.createClass({
             </div>
           </CardText>
           <CardText expandable={true}>
-          <TransactionsContainer origin={this.props.origin} bet={this.props.bet} currentUser={this.props.currentUser}/>
+          <BetStats />
           </CardText>
           <CardActions expandable={true}></CardActions>
         </Card>

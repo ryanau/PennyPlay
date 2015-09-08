@@ -7,13 +7,16 @@ TransactionsContainer = React.createClass({
 			entries: null,
 		}
 	},
+	componentDidMount: function () {
+		this.loadEnties();
+	},
 	loadEnties: function () {
 		var data = {
 		  bet_id: this.props.bet.id,
 		}
 		$.ajax({
 		  url: this.props.origin + '/entries',
-		  type: 'POST',
+		  type: 'GET',
 		  data: data,
 		  dataType: 'json',
 		  crossDomain: true,
@@ -21,8 +24,9 @@ TransactionsContainer = React.createClass({
 		  },
 		  success: function (data) {
 		    this.setState({
-		    	entries: data.entries
+		    	entries: data
 		    })
+		    console.log(data)
 		  }.bind(this),
 		  error: function(error) {
 		    window.location = "/"

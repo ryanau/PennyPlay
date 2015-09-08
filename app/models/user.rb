@@ -1,23 +1,11 @@
 class User < ActiveRecord::Base
-  # validates :email, uniqueness: true
-  # has_secure_password
-
-  # def self.create_with_omniauth(auth)
-  #   create! do |user|
-  #     user.provider = auth["provider"]
-  #     user.uid = auth["uid"]
-  #     user.name = auth["info"]["name"]
-  #   end
-  # end
-
   has_many :users_bets
   has_many :bets, through: :users_bets
 
-  has_many :wins, :class_name => "Detail", :foreign_key => :winner_id
-  has_many :losses, :class_name => "Detail", :foreign_key => :loser_id
+  has_many :wins, :class_name => "Winner", :foreign_key => :winner_id
+  has_many :losses, :class_name => "Loser", :foreign_key => :loser_id
 
   has_many :entries, through: :bets
-  has_many :details, through: :entries
-
+  has_many :confirmations, through: :entries
 
 end

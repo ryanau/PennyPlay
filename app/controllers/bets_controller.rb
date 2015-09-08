@@ -4,7 +4,9 @@ class BetsController < ApplicationController
 
   def index
     bets = current_user.bets.includes(:entries).order(created_at: :DESC).order('entries.updated_at')
-    render json: bets
+    render json: bets.to_json(
+      include: [:entries]
+      )
   end
 
   def create
