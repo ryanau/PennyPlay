@@ -9,8 +9,8 @@ var NavBar = require('./NavBar.jsx');
 App = React.createClass({
 	getDefaultProps: function() {
     return {
-      origin: '/api',
-      // origin: 'http://localhost:3000/api'
+      // origin: '/api',
+      origin: 'http://localhost:3000/api'
     }
   },
   getInitialState: function () {
