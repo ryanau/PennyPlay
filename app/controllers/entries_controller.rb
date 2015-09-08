@@ -189,7 +189,7 @@ class EntriesController < ApplicationController
     @client.messages.create(
       from: "+14152148230",
       to: phone,
-      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}reply with YES#{bet_id} to approve entry."
+      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}.Reply with YES#{bet_id} to approve entry."
     )
   end
 
