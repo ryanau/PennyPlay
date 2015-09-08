@@ -23,6 +23,7 @@ module.exports = React.createClass({
             <li className="name">
               <h1><a href="#">{homeLink}</a></h1>
             </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
           </ul>
           <section className="top-bar-section">
             <ul className="right">
