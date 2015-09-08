@@ -28,7 +28,6 @@ html * {
   min-width: 50%;
   min-height: 50%;
   background-size: cover;
-  -webkit-filter: brightness(30%);
 }
 
 #venmo {
