@@ -1,6 +1,7 @@
 require 'httparty'
 class EntriesController < ApplicationController
-  before_action :authentication
+  skip_before_action :authentication, only: [:sms_approve]
+  before_action :authentication, only: [:create, :index, :pending, :approve]
 
   def create
     entry = Entry.create(bet_id: params[:bet_id])
@@ -71,11 +72,11 @@ class EntriesController < ApplicationController
   end
 
   def sms_approve
-    from = params[:from]
+    from = params[:from][2, params[:from].length]
     body = params[:body]
 
     user = User.find_by(phone: from)
-    if body[0,3] === "YES"
+    if body[0,3] == "YES"
       bet_id = body[4, body.length]
       bet = user.bets.where(id: bet_id)[0]
 
