@@ -28,8 +28,8 @@ Landing = React.createClass({
 			var button = <FlatButton
 			  linkButton={true}
 			  label="Log In with Venmo"
-			  // href={'https://pennyplay.herokuapp.com/auth/venmo'}/>
-			  href={'http://localhost:3000/auth/venmo'}/>
+			  href={'https://pennyplay.herokuapp.com/auth/venmo'}/>
+			  // href={'http://localhost:3000/auth/venmo'}/>
 		}
     return (
     	<div>

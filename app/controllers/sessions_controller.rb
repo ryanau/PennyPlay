@@ -16,14 +16,14 @@ class SessionsController < ApplicationController
       user.update_attributes(token: token)
       jwt = JWT.encode({uid: uid, first_name: first_name, last_name: last_name, pic: pic, exp: 1.day.from_now.to_i}, ENV['SECRET_KEY_BASE'])
       query = {jwt: jwt}.to_query
-      # redirect_to "https://pennyplay.herokuapp.com/?#{query}"
-      redirect_to "http://localhost:8080/?#{query}"
+      redirect_to "https://pennyplay.herokuapp.com/?#{query}"
+      # redirect_to "http://localhost:8080/?#{query}"
     else
       User.create(uid: uid, email: email, first_name: first_name, last_name: last_name, token: token, pic: pic, phone: phone)
       jwt = JWT.encode({uid: uid, first_name: first_name, last_name: last_name, pic: pic, exp: 1.day.from_now.to_i}, ENV['SECRET_KEY_BASE'])
       query = {jwt: jwt}.to_query
-      # redirect_to "https://pennyplay.herokuapp.com/?#{query}"
-      redirect_to "http://localhost:8080s/?#{query}"
+      redirect_to "https://pennyplay.herokuapp.com/?#{query}"
+      # redirect_to "http://localhost:8080s/?#{query}"
     end
   end
 
