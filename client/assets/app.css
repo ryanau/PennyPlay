@@ -1,11 +1,14 @@
+@import url('http://fonts.googleapis.com/css?family=Lato&subset=latin');
+
+
 html * {
   font-family: 'Lato', sans-serif;
 }
 
 .container {
-	margin-top: 60px;
-	margin-left: 50px;
-	margin-right: 50px;
+	margin-top: 80px;
+	margin-left: 7%;
+	margin-right: 7%;
 }
 
 #landing {
@@ -24,11 +27,11 @@ html * {
   margin: auto; 
   min-width: 50%;
   min-height: 50%;
+  background-size: cover;
 }
 
 #venmo {
 	text-align: center;
-	color: white;
 	width: 100%;
 	position: absolute;
 	top: 35%;

@@ -1,7 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
 var moment = require('moment');
-
+var Names = require('./Names.jsx');
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -22,26 +22,22 @@ PendingTransaction = React.createClass({
   render: function () {
     var winners = this.props.winners.map(function (winner_name, index){
       return (
-        <ListItem key={index} primaryText={winner_name} />
+        <Names name={winner_name} />
       )
     });
     var losers = this.props.losers.map(function (loser_name, index){
       return (
-        <ListItem key={index} primaryText={loser_name} />
+        <Names name={loser_name} />      
       )
-    })
+    });
+    var info = moment(this.props.bet.entries[this.props.bet.entries.length -1].created_at).fromNow()
     return (
       <div>
-        <h4>Pending</h4>
-        <List>
-          <p>Winners</p>
+        <p>Pending Entry from {info}</p>
+          Winners:
           {winners}
-        </List>
-        <ListDivider />
-        <List>
-          <p>Losers</p>
-          {losers}
-        </List>
+          Losers:
+          {losers} 
       </div>
     )
   }

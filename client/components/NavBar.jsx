@@ -2,32 +2,56 @@ var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
 
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var AppBar = mui.AppBar;
+var FlatButton = mui.FlatButton;
+var FontIcon = mui.FontIcon;
+
 module.exports = React.createClass({
   handleSignOutLink: function() {
     sessionStorage.setItem('jwt','');
     location = '/';
   },
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function () {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
   render: function() {
     if (this.props.signedIn) {
       var homeLink = <Link to="dashboard">PennyPlay</Link>
-      var signingLink = <li onClick={this.handleSignOutLink}><a href="/">Sign Out</a></li>
+      var signingLink = <FlatButton
+                            onClick={this.handleSignOutLink}
+                            hoverColor={'#FF9800'}
+                            rippleColor={'#FF9800'}
+                            style={{backgroundColor: '#FF9800',
+                                    color: '#002e32',
+                                    lineHeight: '18px'}}
+                            label={('no', 'SignOut')}/>
     } else {
       var homeLink = <Link to="/">PennyPlay</Link>
     }
     return (
       <div className="fixed">
-        <nav className="top-bar" data-topbar role="navigation">
-          <ul className="title-area">
-            <li className="name">
-              <h1><a href="#">{homeLink}</a></h1>
-            </li>
-          </ul>
-          <section className="top-bar-section">
-            <ul className="right">
-              {signingLink}
-            </ul>
-          </section>
-        </nav>
+        <AppBar 
+          iconElementLeft={<FlatButton
+                            containerElement={<Link to="/dashboard" />}
+                            linkButton={true}
+                            hoverColor={'#FF9800'}
+                            rippleColor={'#FF9800'}
+                            style={{backgroundColor: '#FF9800',
+                                    color: '#002e32',
+                                    fontSize:'18px'}}
+                            label={('no', 'PennyPlay')}/>}
+          style={{marginBottom: '0px',
+                  backgroundColor: '#FF9800',
+                  minHeight: '0px'}}
+          iconElementRight={signingLink}/>
       </div>
     );
   }

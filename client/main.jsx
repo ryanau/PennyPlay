@@ -1,11 +1,14 @@
 require('./assets/app.css');
 require('./assets/foundation.min.css');
+require('./assets/foundation.min.js');
 require('./assets/normalize.css');
 
 var React = require('react');
 var App = require('./components/App.jsx');
 var Router = require('react-router');
 var routes = require('./config/routes.jsx');
+var $ = require('jquery');
+
 
 
 Router.run(routes, Router.HistoryLocation, function(Handler) {

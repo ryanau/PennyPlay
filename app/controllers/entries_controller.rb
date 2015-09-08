@@ -1,52 +1,80 @@
 require 'httparty'
 class EntriesController < ApplicationController
-  before_action :authentication
+  skip_before_action :authentication, only: [:sms_approve]
+  before_action :authentication, only: [:create, :index, :pending, :approve]
 
   def create
     entry = Entry.create(bet_id: params[:bet_id])
     params[:users].each do |user|
       if user[1]["winner"] == "true"
-        detail = entry.details.create(winner_id: user[1]["user_id"].to_i)
+        detail = entry.winners.create(winner_id: user[1]["user_id"].to_i)
       else
-        detail = entry.details.create(loser_id: user[1]["user_id"].to_i)
+        detail = entry.losers.create(loser_id: user[1]["user_id"].to_i)
       end
     end
-    entry.details.first.update_attributes(approved: true, approved_user_id: current_user.id)
+    entry.confirmations.create(approved: true, user_id: current_user.id)
+
+    bet = Bet.find(params[:bet_id])
+
+    winners_names_arr = []
+    bet.entries.last.winners.each do |winner|
+      winners_names_arr << winner.winner.first_name
+    end
+    losers_names_arr = []
+    bet.entries.last.losers.each do |loser|
+      losers_names_arr << loser.loser.first_name
+    end
+
+    winners = ''
+    winners_names_arr.each do |winner|
+      winners += winner + ' '
+    end
+
+    losers = ''
+    losers_names_arr.each do |loser|
+      losers += loser + ' '
+    end
+
+    message = "winners are #{winners}and losers are #{losers}"
+
+    users = bet.users.where.not(id: current_user.id)
+    users.each do |user|
+      twilio_approve_notification(user.phone, bet.id, bet.name, message)
+    end
 
     render json: {message: "Entry created"}
   end
 
+  def index
+    entries = Entry.where(bet_id: params[:bet_id]).includes(:winners, :losers)
+    render json: entries.to_json(
+      include: [:winners, :losers]
+      )
+  end
+
   def pending
-    if Bet.find(params[:bet_id]).entries.length != 0
-      if Bet.find(params[:bet_id]).entries.last.details.where(approved: false).length > 0
-        if Bet.find(params[:bet_id]).entries.last.details.where(approved: true).where(approved_user_id: current_user.id).length != 0
-
+    bet = Bet.find(params[:bet_id])
+    if bet.entries.count != 0
+      if bet.entries.last.confirmations.count != bet.users.count
+        if bet.entries.last.confirmations.where(user_id: current_user.id).count != 0
             pending = "approved"
-
             losers = []
-            losers_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(loser_id: 0)
-            losers_arr.each do |loser|
-              losers << User.find(loser.loser_id).first_name
+            bet.entries.last.losers.each do |loser|
+              losers << loser.loser.first_name
             end
-            
             winners = []
-            winners_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(winner_id: 0)
-            winners_arr.each do |winner|
-              winners << User.find(winner.winner_id).first_name
+            bet.entries.last.winners.each do |winner|
+              winners << winner.winner.first_name
             end
         else
           pending = "true"
-
           losers = []
-          losers_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(loser_id: 0)
-          losers_arr.each do |loser|
-            losers << User.find(loser.loser_id).first_name
+          bet.entries.last.losers.each do |loser|
+            losers << loser.loser.first_name
           end
-          
           winners = []
-          winners_arr = Bet.find(params[:bet_id]).entries.last.details.where.not(winner_id: 0)
-          winners_arr.each do |winner|
-            winners << User.find(winner.winner_id).first_name
+          bet.entries.last.winners.each do |winner|
+            winners << winner.winner.first_name
           end
         end
       end
@@ -57,23 +85,55 @@ class EntriesController < ApplicationController
   end
 
   def approve
-    detail = Bet.find(params[:bet_id]).entries.last.details.where(approved: false).where.not(approved_user_id: current_user.id).first
-    detail.update_attributes(approved: true, approved_user_id: current_user.id)
-
-    p "before create venmo"
-    create_venmo_transaction(params[:bet_id])
-    p "after create venmo"
+    bet = Bet.find(params[:bet_id])
+    if bet.entries.last.confirmations.where(user_id: current_user.id).count == 0
+      bet.entries.last.confirmations.create(user_id: current_user.id, approved: true)
+    end
+    create_venmo_transaction(bet)
     render json: {message: "approved"}
   end
 
-  private
-  def create_venmo_transaction(bet_id)
-    if Bet.find(params[:bet_id]).entries.last.details.where(approved: false).length == 0
-      winners_uids_arr = User.where(id: Bet.find(params[:bet_id]).entries.last.details.where.not(winner_id: 0).pluck(:winner_id)).pluck(:uid)
-      losers_arr = User.where(id: Bet.find(params[:bet_id]).entries.last.details.where.not(loser_id: 0).pluck(:loser_id)).pluck(:token, :phone)
+  def sms_approve
+    from_input = params[:From]
+    from = from_input[2, from_input.length]
+    body = params[:Body].upcase
 
-      winners_names_arr = User.where(id: Bet.find(params[:bet_id]).entries.last.details.where.not(winner_id: 0).pluck(:winner_id)).pluck(:first_name)
-      losers_names_arr = User.where(id: Bet.find(params[:bet_id]).entries.last.details.where.not(loser_id: 0).pluck(:loser_id)).pluck(:first_name)
+    user = User.find_by(phone: from)
+    if body[0,3] == "YES"
+      bet_id = body[3, body.length]
+      bet = user.bets.where(id: bet_id)[0]
+
+      if bet.entries.last.confirmations.where(user_id: user.id).count == 0
+        bet.entries.last.confirmations.create(user_id: user.id, approved: true)
+        create_venmo_transaction(bet)
+      end
+
+    end
+  end
+
+  private
+
+  def create_venmo_transaction(bet)
+    if bet.entries.last.confirmations.count == bet.users.count
+
+      winners_uids_arr = []
+      bet.entries.last.winners.each do |winner|
+        winners_uids_arr << winner.winner.uid
+      end
+
+      losers_arr = []
+      bet.entries.last.losers.each do |loser|
+        losers_arr << [loser.loser.token, loser.loser.phone]
+      end
+
+      winners_names_arr = []
+      bet.entries.last.winners.each do |winner|
+        winners_names_arr << winner.winner.first_name
+      end
+      losers_names_arr = []
+      bet.entries.last.losers.each do |loser|
+        losers_names_arr << loser.loser.first_name
+      end
 
       winners = ''
       winners_names_arr.each do |winner|
@@ -85,13 +145,15 @@ class EntriesController < ApplicationController
         losers += loser + ' '
       end
 
-      message = "PennyPlay: Winners are #{winners}and losers are #{losers}"
+      bet_name = bet.name
+
+      message = "PennyPlay: Winners are #{winners}and losers are #{losers} for the challenge: #{bet_name}"
 
       losers_arr.each do |loser|
         winners_uids_arr.each do |winner_uid|
           venmo_post(loser[0], message, winner_uid)
-          twilio(loser[1])
         end
+          # twilio_loser_notification(loser[1], bet_name)
       end
     end
   end
@@ -107,17 +169,30 @@ class EntriesController < ApplicationController
     )
   end
 
-  def twilio(phone)
+  def twilio_loser_notification(phone, bet_name)
     phone = '+1' + phone.to_s
     account_sid = ENV['TWILIO_ACCOUNT_SID']
     auth_token = ENV['TWILIO_AUTH_TOKEN']
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
-      from: 'PennyPlay',
+      from: "+14152148230",
       to: phone,
-      body: 'PennyPlay: You have just made a payment on Venmo'
+      body: "PennyPlay: You just paid the winners for #{bet_name} on Venmo"
     )
   end
+
+  def twilio_approve_notification(phone, bet_id, bet_name, message)
+    phone = '+1' + phone.to_s
+    account_sid = ENV['TWILIO_ACCOUNT_SID']
+    auth_token = ENV['TWILIO_AUTH_TOKEN']
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client.messages.create(
+      from: "+14152148230",
+      to: phone,
+      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}- Reply with YES#{bet_id} to approve entry."
+    )
+  end
+
 end
 
 

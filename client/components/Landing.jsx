@@ -23,20 +23,27 @@ Landing = React.createClass({
 		 	<FlatButton
 		 		containerElement={<Link to="/dashboard" />}
 		 		linkButton={true}
+		 		hoverColor={'#BDBDBD'}
+		 		style={{backgroundColor: '#FFCC80'
+		 		        }}
 		 		label={('no', 'Start the Challenge')}/>
 		} else {
 			var button = <FlatButton
 			  linkButton={true}
 			  label="Log In with Venmo"
-			  href={'https://pennyplay.herokuapp.com/auth/venmo'}/>
-			  // href={'http://localhost:3000/auth/venmo'}/>
+			  hoverColor={'#BDBDBD'}
+			  style={{backgroundColor: '#FFCC80'
+			          }}
+			  // href={'https://pennyplay.herokuapp.com/auth/venmo'}/>
+			  href={'http://localhost:3000/auth/venmo'}/>
 		}
     return (
     	<div>
     		<div id="landing">
+    			<img src="./jump.jpg" />
 				</div>
 				<div id="venmo">
-			    <h4>It is time to challenge your friends.</h4>
+			    <h4 style={{color: "#B0BEC5"}}>It is time to challenge your friends.</h4>
 		      {button}
 	      </div>
       </div>

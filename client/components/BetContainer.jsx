@@ -8,7 +8,7 @@ var TransactionsContainer = require('./TransactionsContainer.jsx');
 var SearchModal = require('./SearchModal.jsx');
 var TransactionModal = require('./TransactionModal.jsx');
 var PendingTransaction = require('./PendingTransaction.jsx');
-
+var BetStats = require('./BetStats.jsx');
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -171,7 +171,7 @@ BetContainer = React.createClass({
     this.refs.newAddUserDialog.dismiss();
   },
   handleDeleteBetConfirmation: function () {
-    if (confirm("Are You Sure to Delete Bet?") == true) {
+    if (confirm("Are You Sure to Delete Challenge?") == true) {
       this.handleDeleteBet();
     };
   },
@@ -225,7 +225,7 @@ BetContainer = React.createClass({
         label="Cancel"
         onClick={this.closeTransactionModal}/>
       <FlatButton
-        label="Create Transaction"
+        label="Create Entry"
         onClick={this.newTransaction}
         secondary={true}/> 
       </div>
@@ -240,7 +240,7 @@ BetContainer = React.createClass({
     var transactionModal = 
     <Dialog
       ref="newTransactionDialog"
-      title="New Transaction"
+      title="New Entry"
       actions={TransactionDialogAction}
       modal={false}>
       <TransactionModal bet_id={bet.id} origin={this.props.origin} users={this.state.users} usersBasket={this.state.usersBasket}/>
@@ -276,7 +276,7 @@ BetContainer = React.createClass({
           onClick={this.handleApprove}
           secondary={true}/>
         <FlatButton
-          label="Delete Bet"
+          label="Delete Challenge"
           onClick={this.handleDeleteBetConfirmation}
           primary={true}/>
         <PendingTransaction bet={bet} winners={this.state.winners} losers={this.state.losers}/>
@@ -288,7 +288,7 @@ BetContainer = React.createClass({
           label="Waiting for others to confirm"
           disabled={true}/>
         <FlatButton
-          label="Delete Bet"
+          label="Delete Challenge"
           onClick={this.handleDeleteBetConfirmation}
           primary={true}/>
         <PendingTransaction bet={bet} winners={this.state.winners} losers={this.state.losers}/>
@@ -297,15 +297,15 @@ BetContainer = React.createClass({
       var showButtons = 
         <div>
         <FlatButton
-          label="Add User to Bet"
+          label="Add User to Challenge"
           onClick={this.openAddUserModal}
           secondary={true}/>
         <FlatButton
-            label="New Transaction"
+            label="New Entry"
             onClick={this.openTransactionModal}
             secondary={true}/>
         <FlatButton
-          label="Delete Bet"
+          label="Delete Challenge"
           onClick={this.handleDeleteBetConfirmation}
           primary={true}/>
         </div>;
@@ -313,7 +313,7 @@ BetContainer = React.createClass({
     var permanentButtons = 
       <div>
         <FlatButton
-          label="Delete Bet"
+          label="Delete Challenge"
           onClick={this.handleDeleteBetConfirmation}/>
       </div>
     var subInfo = moment(bet.created_at).fromNow();
@@ -327,11 +327,11 @@ BetContainer = React.createClass({
           autoHideDuration={2000}/>
         <Snackbar
           ref="newTransactionNotification"
-          message='Transaction Created'
+          message='Entry Created'
           autoHideDuration={2000}/>
         <Snackbar
           ref="approvedNotification"
-          message='Transaction Approved'
+          message='Entry Approved'
           autoHideDuration={2000}/>
 	      <Card key={bet.id} initiallyExpanded={false}>
           <CardHeader
@@ -346,7 +346,7 @@ BetContainer = React.createClass({
             </div>
           </CardText>
           <CardText expandable={true}>
-          <TransactionsContainer origin={this.props.origin} entries={bet.entries} currentUser={this.props.currentUser}/>
+          <BetStats bet={bet} origin={this.props.origin}/>
           </CardText>
           <CardActions expandable={true}></CardActions>
         </Card>
