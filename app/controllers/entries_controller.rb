@@ -72,8 +72,9 @@ class EntriesController < ApplicationController
   end
 
   def sms_approve
-    from = params[:from][2, params[:from].length]
-    body = params[:body]
+    from_input = params[:From]
+    from = from_input[2, from_input.length]
+    body = params[:Body].upcase
 
     user = User.find_by(phone: from)
     if body[0,3] == "YES"
