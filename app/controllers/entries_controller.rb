@@ -77,8 +77,9 @@ class EntriesController < ApplicationController
     body = params[:Body].upcase
 
     user = User.find_by(phone: from)
+    p "before yes"
     if body[0,3] == "YES"
-      bet_id = body[4, body.length]
+      bet_id = body[3, body.length]
       bet = user.bets.where(id: bet_id)[0]
 
       if bet.entries.last.confirmations.where(user_id: current_user.id).count == 0
