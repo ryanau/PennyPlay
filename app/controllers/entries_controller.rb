@@ -152,8 +152,8 @@ class EntriesController < ApplicationController
       losers_arr.each do |loser|
         winners_uids_arr.each do |winner_uid|
           venmo_post(loser[0], message, winner_uid)
-          twilio_loser_notification(loser[1], bet_name)
         end
+          twilio_loser_notification(loser[1], bet_name)
       end
     end
   end
