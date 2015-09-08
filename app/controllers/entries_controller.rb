@@ -15,9 +15,31 @@ class EntriesController < ApplicationController
     entry.confirmations.create(approved: true, user_id: current_user.id)
 
     bet = Bet.find(params[:bet_id])
+
+    winners_names_arr = []
+    bet.entries.last.winners.each do |winner|
+      winners_names_arr << winner.winner.first_name
+    end
+    losers_names_arr = []
+    bet.entries.last.losers.each do |loser|
+      losers_names_arr << loser.loser.first_name
+    end
+
+    winners = ''
+    winners_names_arr.each do |winner|
+      winners += winner + ' '
+    end
+
+    losers = ''
+    losers_names_arr.each do |loser|
+      losers += loser + ' '
+    end
+
+    message = "winners are #{winners}and losers are #{losers}"
+
     users = bet.users.where.not(id: current_user.id)
     users.each do |user|
-      twilio_approve_notification(user.phone, bet.id, bet.name)
+      twilio_approve_notification(user.phone, bet.id, bet.name, message)
     end
 
     render json: {message: "Entry created"}
@@ -77,7 +99,6 @@ class EntriesController < ApplicationController
     body = params[:Body].upcase
 
     user = User.find_by(phone: from)
-    p "before yes"
     if body[0,3] == "YES"
       bet_id = body[3, body.length]
       bet = user.bets.where(id: bet_id)[0]
@@ -160,7 +181,7 @@ class EntriesController < ApplicationController
     )
   end
 
-  def twilio_approve_notification(phone, bet_id, bet_name)
+  def twilio_approve_notification(phone, bet_id, bet_name, message)
     phone = '+1' + phone.to_s
     account_sid = ENV['TWILIO_ACCOUNT_SID']
     auth_token = ENV['TWILIO_AUTH_TOKEN']
@@ -168,7 +189,7 @@ class EntriesController < ApplicationController
     @client.messages.create(
       from: "+14152148230",
       to: phone,
-      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, reply with YES#{bet_id} to approve entry."
+      body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}reply with YES#{bet_id} to approve entry."
     )
   end
 
