@@ -7,9 +7,9 @@ class EntriesController < ApplicationController
     entry = Entry.create(bet_id: params[:bet_id])
     params[:users].each do |user|
       if user[1]["winner"] == "true"
-        detail = entry.winners.create(winner_id: user[1]["user_id"].to_i, params[:bet_id].to_i)
+        detail = entry.winners.create(winner_id: user[1]["user_id"].to_i, bet_id: params[:bet_id].to_i)
       else
-        detail = entry.losers.create(loser_id: user[1]["user_id"].to_i, params[:bet_id].to_i)
+        detail = entry.losers.create(loser_id: user[1]["user_id"].to_i, bet_id: params[:bet_id].to_i)
       end
     end
     entry.confirmations.create(approved: true, user_id: current_user.id)
