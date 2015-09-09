@@ -23,6 +23,7 @@ App = React.createClass({
     var jwt = new Uri(location.search).getQueryParamValue('jwt');
     console.log(jwt)
     if (!!jwt) {localStorage.setItem('jwt', jwt);}
+    console.log(localStorage.jwt)
   },
   componentDidMount: function() {
     if (!!localStorage.getItem('jwt')) {this.currentUserFromAPI();}
