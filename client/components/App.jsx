@@ -21,6 +21,7 @@ App = React.createClass({
   },
   componentWillMount: function() {
     var jwt = new Uri(location.search).getQueryParamValue('jwt');
+    console.log(jwt)
     if (!!jwt) {localStorage.setItem('jwt', jwt);}
   },
   componentDidMount: function() {
