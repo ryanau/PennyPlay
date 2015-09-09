@@ -37,7 +37,7 @@ Open a new window in terminal to install json package and run the Node.js server
 
 ```
 npm install
-npm devserve
+npm run devserve
 ```
 
 Open up the client/components/App.jsx, client/components/Landing.jsx, app/controllers/sessions_controller.rb files, and uncomment/comment out the lines according when in development. This is to change the redirect/call back URL from Venmo, after logging in with Omniauth.
