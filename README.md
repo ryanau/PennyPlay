@@ -28,30 +28,30 @@ To play around with this app in development, please do the followings in your te
 
 To install all the Ruby gems and run the Rails server:
 
-'''
+```
 bundle install
 rails s
-'''
+```
 
 Open a new window in terminal to install json package and run the Node.js server:
 
-'''
+```
 npm install
 npm devserve
-'''
+```
 
 Open up the client/components/App.jsx, client/components/Landing.jsx, app/controllers/sessions_controller.rb files, and uncomment/comment out the lines according when in development. This is to change the redirect/call back URL from Venmo, after logging in with Omniauth.
 
 Make a .env file in the root directory and enter the following information:
 You'll need to register a developer account through Venmo and Twilio
 
-'''
+```
 VENMO_CLIENT_ID=
 VENMO_CLIENT_SECRET=
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_PHONE=
-'''
+```
 
 Now go to localhost:8080 and it should work! If it doesn't work or if you have any question, please leave an issue and I'll try to respond to that.
 
