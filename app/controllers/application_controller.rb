@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
   before_action :cors_preflight_check, if: proc { Rails.env.development? }
-  # before_action :authentication, only: [:current]
 
   after_action :cors_set_access_control_headers
 

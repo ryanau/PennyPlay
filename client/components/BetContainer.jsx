@@ -75,7 +75,7 @@ BetContainer = React.createClass({
         data: data,
         dataType: 'json',
         crossDomain: true,
-        headers: {'Authorization': sessionStorage.getItem('jwt'),
+        headers: {'Authorization': localStorage.getItem('jwt'),
         },
         success: function (data) {
           this.closeTransactionModal();
@@ -98,7 +98,7 @@ BetContainer = React.createClass({
       data: data,
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.setState({
@@ -122,7 +122,7 @@ BetContainer = React.createClass({
       data: data,
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.setState({
@@ -145,7 +145,7 @@ BetContainer = React.createClass({
       data: data,
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.closeAddUserModal();
@@ -185,7 +185,7 @@ BetContainer = React.createClass({
       data: data,
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.props.refresh();
@@ -205,7 +205,7 @@ BetContainer = React.createClass({
       data: data,
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.refs.approvedNotification.show();

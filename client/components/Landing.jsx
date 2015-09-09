@@ -34,8 +34,11 @@ Landing = React.createClass({
 			  hoverColor={'#BDBDBD'}
 			  style={{backgroundColor: '#FFCC80'
 			          }}
-			  // href={'https://pennyplay.herokuapp.com/auth/venmo'}/>
-			  href={'http://localhost:3000/auth/venmo'}/>
+			  // comment the following line in development
+			  href={'https://pennyplay.herokuapp.com/auth/venmo'}/>
+
+			  // comment the following line when deploying to heroku
+			  // href={'http://localhost:3000/auth/venmo'}/>
 		}
     return (
     	<div>

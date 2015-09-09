@@ -1,3 +1,4 @@
+
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
@@ -10,7 +11,7 @@ var FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
   handleSignOutLink: function() {
-    sessionStorage.setItem('jwt','');
+    localStorage.setItem('jwt','');
     location = '/';
   },
   childContextTypes: {

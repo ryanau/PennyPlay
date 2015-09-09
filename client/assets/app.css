@@ -1,4 +1,4 @@
-@import url('http://fonts.googleapis.com/css?family=Lato&subset=latin');
+@import url('https://fonts.googleapis.com/css?family=Lato&subset=latin');
 
 
 html * {
@@ -9,6 +9,7 @@ html * {
 	margin-top: 80px;
 	margin-left: 7%;
 	margin-right: 7%;
+  margin-bottom: 100px;
 }
 
 #landing {

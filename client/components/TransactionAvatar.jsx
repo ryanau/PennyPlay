@@ -40,9 +40,9 @@ TransactionAvatar = React.createClass({
   },
   render: function () {
     if (this.props.user[2] == "https://s3.amazonaws.com/venmo/no-image.gif" || this.props.user[2].substring(0,27) == "https://graph.facebook.com/") {
-      var avatar = <Avatar>{this.props.user[0].charAt(0) + this.props.user[1].charAt(0)}</Avatar>
+      var avatar = <Avatar tooltip={this.props.user[0]}>{this.props.user[0].charAt(0) + this.props.user[1].charAt(0)}</Avatar>
     } else {
-      var avatar = <Avatar src={this.props.user[2]} />
+      var avatar = <Avatar tooltip={this.props.user[0]} src={this.props.user[2]} />
     };
     return (
       <div>

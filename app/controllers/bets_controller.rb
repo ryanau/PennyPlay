@@ -43,7 +43,8 @@ class BetsController < ApplicationController
     bet = Bet.find(params[:bet_id])
     stats = []
     bet.users.each do |user|
-      stats << ["#{user.first_name}: ", "#{user.wins.count}; "]
+      wins = user.wins.where(bet_id: bet.id).count
+      stats << ["#{user.first_name}: ", "#{wins}; "]
     end
 
     render json: {stats: stats}
@@ -56,7 +57,7 @@ class BetsController < ApplicationController
     auth_token = ENV['TWILIO_AUTH_TOKEN']
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
-      from: "+14152148230",
+      from: ENV['TWILIO_PHONE'],
       to: phone,
       body: "PennyPlay: #{adder_name} just added you to the challenge #{bet_name}."
     )
