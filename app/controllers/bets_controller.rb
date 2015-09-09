@@ -57,7 +57,7 @@ class BetsController < ApplicationController
     auth_token = ENV['TWILIO_AUTH_TOKEN']
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
-      from: "+14152148230",
+      from: ENV['TWILIO_PHONE'],
       to: phone,
       body: "PennyPlay: #{adder_name} just added you to the challenge #{bet_name}."
     )

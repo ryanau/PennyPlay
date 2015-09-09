@@ -159,7 +159,7 @@ class EntriesController < ApplicationController
   end
 
   def venmo_post(token, note, user_id)
-    p "before post request to venmo"
+
     HTTParty.post("https://api.venmo.com/v1/payments",
       :body => { "amount" => "0.01", 
                   "access_token" => token,
@@ -175,7 +175,7 @@ class EntriesController < ApplicationController
     auth_token = ENV['TWILIO_AUTH_TOKEN']
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
-      from: "+14152148230",
+      from: ENV['TWILIO_PHONE'],
       to: phone,
       body: "PennyPlay: You just paid the winners for #{bet_name} on Venmo"
     )
@@ -187,7 +187,7 @@ class EntriesController < ApplicationController
     auth_token = ENV['TWILIO_AUTH_TOKEN']
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.messages.create(
-      from: "+14152148230",
+      from: ENV['TWILIO_PHONE'],
       to: phone,
       body: "PennyPlay: Your friend just created a new entry for #{bet_name}, #{message}- Reply with YES#{bet_id} to approve entry."
     )

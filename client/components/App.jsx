@@ -9,7 +9,11 @@ var NavBar = require('./NavBar.jsx');
 App = React.createClass({
 	getDefaultProps: function() {
     return {
+
+      // comment the following line when in development
       origin: '/api',
+
+      // comment the following line when deploying to heroku
       // origin: 'http://localhost:3000/api'
     }
   },
