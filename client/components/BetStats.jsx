@@ -31,7 +31,7 @@ BetStats = React.createClass({
       data: data,
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.setState({

@@ -21,10 +21,10 @@ App = React.createClass({
   },
   componentWillMount: function() {
     var jwt = new Uri(location.search).getQueryParamValue('jwt');
-    if (!!jwt) {sessionStorage.setItem('jwt', jwt);}
+    if (!!jwt) {localStorage.setItem('jwt', jwt);}
   },
   componentDidMount: function() {
-    if (!!sessionStorage.getItem('jwt')) {this.currentUserFromAPI();}
+    if (!!localStorage.getItem('jwt')) {this.currentUserFromAPI();}
   },
   currentUserFromAPI: function() {
     $.ajax({
@@ -32,7 +32,7 @@ App = React.createClass({
       type: 'GET',
       dataType: 'json',
       crossDomain: true,
-      headers: {'Authorization': sessionStorage.getItem('jwt'),
+      headers: {'Authorization': localStorage.getItem('jwt'),
       },
       success: function (data) {
         this.setState({signedIn: true, currentUser: {uid: data.uid, first_name: data.first_name, last_name: data.last_name, pic: data.pic}});

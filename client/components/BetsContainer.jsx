@@ -37,7 +37,7 @@ BetsContainer = React.createClass({
 			type: 'GET',
 			dataType: 'json',
 			crossDomain: true,
-			headers: {'Authorization': sessionStorage.getItem('jwt'),
+			headers: {'Authorization': localStorage.getItem('jwt'),
 			},
 			success: function (bets) {
 				this.setState({
@@ -74,7 +74,7 @@ BetsContainer = React.createClass({
 				data: data,
 				dataType: 'json',
 				crossDomain: true,
-				headers: {'Authorization': sessionStorage.getItem('jwt'),
+				headers: {'Authorization': localStorage.getItem('jwt'),
 				},
 				success: function (data) {
 					this.refs.newBetDialog.dismiss();
