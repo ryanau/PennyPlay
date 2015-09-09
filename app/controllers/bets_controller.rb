@@ -43,7 +43,8 @@ class BetsController < ApplicationController
     bet = Bet.find(params[:bet_id])
     stats = []
     bet.users.each do |user|
-      stats << ["#{user.first_name}: ", "#{user.wins.count}; "]
+      wins = user.wins.where(bet_id: bet.id).count
+      stats << ["#{user.first_name}: ", "#{wins}; "]
     end
 
     render json: {stats: stats}

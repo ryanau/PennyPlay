@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150907184759) do
   create_table "losers", force: :cascade do |t|
     t.integer  "loser_id",   default: 0
     t.integer  "entry_id"
+    t.integer  "bet_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -65,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150907184759) do
   create_table "winners", force: :cascade do |t|
     t.integer  "winner_id",  default: 0
     t.integer  "entry_id"
+    t.integer  "bet_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
