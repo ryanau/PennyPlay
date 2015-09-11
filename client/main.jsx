@@ -1,7 +1,7 @@
-require('./assets/app.css');
 require('./assets/foundation.min.css');
 require('./assets/foundation.min.js');
 require('./assets/normalize.css');
+require('./assets/app.css');
 
 var React = require('react');
 var App = require('./components/App.jsx');

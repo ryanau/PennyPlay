@@ -21,6 +21,8 @@ var CardActions = mui.CardActions;
 var CardTitle = mui.CardTitle;
 var Avatar = mui.Avatar;
 var Snackbar = mui.Snackbar;
+var FontIcon = mui.FontIcon;
+var IconButton = mui.IconButton;
 
 BetContainer = React.createClass({
   childContextTypes: {
@@ -257,15 +259,9 @@ BetContainer = React.createClass({
       var avatars = "Loading users..."
     } else {
       var avatars = this.state.users.map(function (user, index) {
-        if (user[2] == "https://s3.amazonaws.com/venmo/no-image.gif" || user[2].substring(0,27) == "https://graph.facebook.com/") {
-          return (
-            <Avatar>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
-          )
-        } else {
-          return (
-            <Avatar src={user[2]} key={index} />
-          )
-        };
+        return (
+          <Avatar style={{marginRight: "3px"}}>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
+        )
       }.bind(this)) 
     }
     if (this.state.pending === "true") {
@@ -297,10 +293,6 @@ BetContainer = React.createClass({
       var showButtons = 
         <div>
         <FlatButton
-          label="Add User to Challenge"
-          onClick={this.openAddUserModal}
-          secondary={true}/>
-        <FlatButton
             label="New Entry"
             onClick={this.openTransactionModal}
             secondary={true}/>
@@ -309,6 +301,8 @@ BetContainer = React.createClass({
           onClick={this.handleDeleteBetConfirmation}
           primary={true}/>
         </div>;
+      var addUserButton = 
+      <IconButton onClick={this.openAddUserModal}><FontIcon className="material-icons">person_add</FontIcon></IconButton>
     };
     var permanentButtons = 
       <div>
@@ -333,23 +327,28 @@ BetContainer = React.createClass({
           ref="approvedNotification"
           message='Entry Approved'
           autoHideDuration={2000}/>
-	      <Card key={bet.id} initiallyExpanded={false}>
-          <CardHeader
-          title={bet.name}
-          subtitle={subInfo}
-          avatar={<Avatar>{bet.name.charAt(0)}</Avatar>}
-          showExpandableButton={true} />
-          <CardText>
-              {avatars}
-            <div className="betButtons">
-              {showButtons}
-            </div>
-          </CardText>
-          <CardText expandable={true}>
-          <BetStats bet={bet} origin={this.props.origin}/>
-          </CardText>
-          <CardActions expandable={true}></CardActions>
-        </Card>
+        <div className="small-12 medium-12 large-12 columns end betCard">
+  	      <Card key={bet.id} initiallyExpanded={false}>
+            <CardHeader
+            title={bet.name}
+            subtitle={subInfo}
+            avatar={<Avatar>{bet.name.charAt(0)}</Avatar>}
+            showExpandableButton={true} />
+            <CardText>
+              <div className="betcardtext">
+                {avatars}
+                {addUserButton}
+              </div>
+              <div className="betButtons">
+                {showButtons}
+              </div>
+            </CardText>
+            <CardText expandable={true}>
+            <BetStats bet={bet} origin={this.props.origin}/>
+            </CardText>
+            <CardActions expandable={true}></CardActions>
+          </Card>
+        </div>
       </div>
     );
   }

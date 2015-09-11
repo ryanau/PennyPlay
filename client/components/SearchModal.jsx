@@ -58,17 +58,16 @@ SearchModal = React.createClass({
   render: function () {
     if (this.state.result === null) {
       var result = "Loading users..."
-    } else if (this.state.result.pic == "https://s3.amazonaws.com/venmo/no-image.gif" || this.state.result.pic.substring(0,27) == "https://graph.facebook.com/") {
-      var result = <Avatar tooltip={this.state.result.first_name} onClick={this.handleAvatarClicked}>{this.state.result.first_name.charAt(0) + this.state.result.last_name.charAt(0)}</Avatar>
     } else {
-      var result = <Avatar tooltip={this.state.result.first_name} src={this.state.result.pic} onClick={this.handleAvatarClicked}/>
+      var result = <Avatar tooltip={this.state.result.first_name} onClick={this.handleAvatarClicked}>{this.state.result.first_name.charAt(0) + this.state.result.last_name.charAt(0)}</Avatar>    
     };
     return (
       <div>
       <TextField
         ref="search"
         onChange={this.fetchUser}
-        hintText="Search by Phone"
+        floatingLabelText="Search by Phone"
+        hintText="3235587890"
         underlineFocusStyle={{borderColor: Styles.amber900}}/>
       <p>Add User by Clicking the Icon</p>
       {result}

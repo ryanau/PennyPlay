@@ -1,14 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&subset=latin');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700&subset=latin');
 
 
 html * {
   font-family: 'Lato', sans-serif;
 }
 
+body {
+  background: #FFB74D;
+}
+
 .container {
 	margin-top: 80px;
-	margin-left: 7%;
-	margin-right: 7%;
+	margin-left: 5px;
+	margin-right: 5px;
   margin-bottom: 100px;
 }
 
@@ -31,6 +35,11 @@ html * {
   background-size: cover;
 }
 
+.landing_text {
+  font-family: 'Lato', sans-serif;
+  color: #FFFFFF;
+}
+
 #venmo {
 	text-align: center;
 	width: 100%;
@@ -48,7 +57,7 @@ html * {
 }
 
 .betContainer {
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .Fl-l {
@@ -62,6 +71,18 @@ html * {
 .Mx-10 {
   margin-left: 10px;
 }
+
+.Ta-c {
+  text-align: center
+}
+
+.betCard {
+  margin-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
 
 
 

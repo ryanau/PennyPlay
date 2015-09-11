@@ -128,10 +128,12 @@ BetsContainer = React.createClass({
 	        message='Challenge Created'
 	        autoHideDuration={2000}/>
 	      <span />
-	      <RaisedButton
-	        label="New Challenge"
-	        onClick={this.openModal}
-	        secondary={true}/>
+	      <div className="Ta-c">
+		      <FlatButton
+		        style={{backgroundColor: '#FFCC80'}}
+		        label="New Challenge"
+		        onClick={this.openModal}/>
+	        </div>
 	      <div className="betContainer">
 		      {bets}
 	      </div>
