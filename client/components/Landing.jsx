@@ -43,10 +43,10 @@ Landing = React.createClass({
     return (
     	<div>
     		<div id="landing">
-    			<img src="./jump.jpg" />
+    			<img src="./.jpg" />
 				</div>
 				<div id="venmo">
-			    <h4 style={{color: "#B0BEC5"}}>It is time to challenge your friends.</h4>
+				   <h4 style={{color: "#000000", fontFamily: 'Lato', fontWeight: "300", fontSize: "32px"}}>It's time to challenge your friends</h4>
 		      {button}
 	      </div>
       </div>

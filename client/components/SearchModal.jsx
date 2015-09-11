@@ -68,7 +68,8 @@ SearchModal = React.createClass({
       <TextField
         ref="search"
         onChange={this.fetchUser}
-        hintText="Search by Phone"
+        floatingLabelText="Search by Phone"
+        hintText="3235587890"
         underlineFocusStyle={{borderColor: Styles.amber900}}/>
       <p>Add User by Clicking the Icon</p>
       {result}

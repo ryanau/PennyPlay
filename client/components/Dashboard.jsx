@@ -7,7 +7,7 @@ Dashboard = React.createClass({
   render: function () {
     return (
     	<div>
-	      <h4>Welcome Back {this.props.currentUser.first_name}!</h4>
+	      <h4 className="Ta-c">Welcome Back {this.props.currentUser.first_name}!</h4>
 	      <BetsContainer currentUser={this.props.currentUser} origin={this.props.origin}/>
       </div>
     );
