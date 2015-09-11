@@ -259,15 +259,9 @@ BetContainer = React.createClass({
       var avatars = "Loading users..."
     } else {
       var avatars = this.state.users.map(function (user, index) {
-        // if (user[2] == "https://s3.amazonaws.com/venmo/no-image.gif" || user[2].substring(0,27) == "https://graph.facebook.com/") {
-        //   return (
-        //     <Avatar>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
-        //   )
-        // } else {
-          return (
-            <Avatar src={user[2]} key={index} />
-          )
-        // };
+        return (
+          <Avatar>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
+        )
       }.bind(this)) 
     }
     if (this.state.pending === "true") {
