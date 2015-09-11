@@ -47,7 +47,9 @@ module.exports = React.createClass({
                             rippleColor={'#FF9800'}
                             style={{backgroundColor: '#FF9800',
                                     color: '#002e32',
-                                    fontSize:'18px'}}
+                                    fontSize:'18px',
+                                    fontFamily: 'Lato', 
+                                    fontWeight: "700"}}
                             label={('no', 'PennyPlay')}/>}
           style={{marginBottom: '0px',
                   backgroundColor: '#FF9800',

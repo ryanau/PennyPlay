@@ -333,7 +333,7 @@ BetContainer = React.createClass({
           ref="approvedNotification"
           message='Entry Approved'
           autoHideDuration={2000}/>
-        <div className="small-12 medium-6 large-4 columns end betCard">
+        <div className="small-12 medium-12 large-12 columns end betCard">
   	      <Card key={bet.id} initiallyExpanded={false}>
             <CardHeader
             title={bet.name}
