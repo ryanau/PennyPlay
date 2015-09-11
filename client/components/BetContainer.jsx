@@ -260,7 +260,7 @@ BetContainer = React.createClass({
     } else {
       var avatars = this.state.users.map(function (user, index) {
         return (
-          <Avatar>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
+          <Avatar style={{marginRight: "3px"}}>{user[0].charAt(0) + user[1].charAt(0)}</Avatar>
         )
       }.bind(this)) 
     }
